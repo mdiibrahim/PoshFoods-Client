@@ -1,24 +1,36 @@
 "use client";
+
+import { persistor, store } from "@/redux/store";
 import { NextUIProvider } from "@nextui-org/react";
-import { Provider } from "react-redux";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-
-import { store } from "@/redux/store";
 import { ReactNode } from "react";
-import Container from "@/components/ui/components";
 
-const UIProvider = ({ children }: { children: ReactNode }) => {
+import { Provider as ReduxProvider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import Container from "@/components/ui/components";
+import { ToastContainer } from "react-toastify";
+
+const Provider = ({ children }: { children: ReactNode }) => {
   return (
     <NextUIProvider>
-      <NextThemesProvider attribute="class" defaultTheme="dark">
-        <Provider store={store}>
-          <div className="container  mx-auto px-4">
-            <Container>{children}</Container>
-          </div>
-        </Provider>
-      </NextThemesProvider>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <ReduxProvider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Container>{children}</Container>
+        </PersistGate>
+      </ReduxProvider>
     </NextUIProvider>
   );
 };
 
-export default UIProvider;
+export default Provider;
