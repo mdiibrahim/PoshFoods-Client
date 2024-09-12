@@ -4,76 +4,89 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   products: [] as any,
   selectedItems: 0,
-  total: 0,
-  deliveryCharge: 15,
+  totalPrice: 0,
+  tax: 0,
+  taxRate: 0.1,
+  grandTotal: 0,
 };
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // add to cart
     addToCart: (state, action) => {
-      const isProductExist = state?.products?.find(
-        (product: any) => product._id === action.payload._id
-      );
-      if (!isProductExist) {
-        console.log("from if");
-        state.products.push({ ...action.payload, quantity: 1 });
-      }
-      selectedItems(state);
-      countTotal(state);
-    },
-    // update quantity
-    updateQuantity: (state, action) => {
-      const product = state.products.find(
-        (product: any) => product._id === action.payload.productId
-      );
+      const { product, quantity } = action.payload;
 
-      if (action.payload.type === "increment") {
-        product.quantity += 1;
+      // Check if the product already exists in the cart
+      const existingProduct = state.products.find((p) => p._id === product._id);
+
+      if (existingProduct) {
+        // If the product exists, increment its quantity
+        existingProduct.quantity += quantity; // Add the specified quantity
       } else {
-        if (product.quantity) {
-          product.quantity -= 1;
-        } else {
-          state.products = state.products.filter(
-            (product: any) => product._id !== action.payload.productId
-          );
-        }
+        // If the product doesn't exist, add it with the provided quantity
+        state.products.push({ ...product, quantity });
       }
+
+      // Update totals
+      state.selectedItems = selectSelectedItems(state);
+      state.totalPrice = selectTotalPrice(state);
+      state.tax = selectTax(state);
+      state.grandTotal = selectGrandTotal(state);
     },
-    // remove from cart
+    updateQuantity: (state: any, action) => {
+      const products = state.products.map((product: any) => {
+        if (product._id === action.payload.id) {
+          if (action.payload.type === "increment") {
+            product.quantity += 1;
+          } else if (action.payload.type === "decrement") {
+            product.quantity -= 1;
+          }
+        }
+        return product;
+      });
+      state.products = products.filter((product: any) => product.quantity > 0);
+
+      state.selectedItems = selectSelectedItems(state);
+      state.totalPrice = selectTotalPrice(state);
+      state.tax = selectTax(state);
+      state.grandTotal = selectGrandTotal(state);
+    },
+    removeFromCart: (state, action) => {
+      state.products = state.products.filter(
+        (product: { _id: any }) => product._id !== action.payload.id
+      );
+      state.selectedItems = selectSelectedItems(state);
+      state.totalPrice = selectTotalPrice(state);
+      state.tax = selectTax(state);
+      state.grandTotal = selectGrandTotal(state);
+    },
     clearCart: (state) => {
       state.products = [];
       state.selectedItems = 0;
+      state.totalPrice = 0;
+      state.tax = 0;
+      state.grandTotal = 0;
     },
   },
 });
 
-// utils for cart
-const selectedItems = (state: any) => {
-  state.selectedItems = state?.products?.reduce(
-    (total: number, product: any) => {
-      return total + product.quantity;
-    },
-    0
-  );
-};
-const countTotal = (state: any) => {
-  //   for total price
-  state.total = state?.products?.reduce((total: number, product: any) => {
-    return (
-      total + state.deliveryCharge + Number(product.price) * product.quantity
-    );
+export const selectSelectedItems = (state: any) =>
+  state.products.reduce((total: number, product: any) => {
+    return Number(total + product.quantity);
   }, 0);
+
+export const selectTotalPrice = (state: any) =>
+  state.products.reduce((total: number, product: any) => {
+    return Number(total + product.quantity * product.price);
+  }, 0);
+
+export const selectTax = (state: any) =>
+  selectTotalPrice(state) * state.taxRate;
+
+export const selectGrandTotal = (state: any) => {
+  return selectTotalPrice(state) + selectTotalPrice(state) * state.taxRate + 60;
 };
 
-export const selectProductQuantityById = (
-  state: any,
-  productId: string
-): number => {
-  const product = state.cart.products.find((p: any) => p._id === productId);
-  return product ? product.quantity : 0;
-};
-
-export const { addToCart, updateQuantity, clearCart } = cartSlice.actions;
+export const { addToCart, updateQuantity, removeFromCart, clearCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;

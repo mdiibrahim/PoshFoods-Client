@@ -1,4 +1,3 @@
-// src/redux/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "@/redux/features/cartSlice";
 import authReducer from "@/redux/features/authSlice";
@@ -13,7 +12,7 @@ const persistConfig = {
 };
 
 const persistedCartReducer = persistReducer(persistConfig, cartReducer);
-const persistedAuthReducer = persistReducer(persistConfig, authReducer); // Persist the auth slice
+const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
@@ -22,12 +21,11 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(baseApi.middleware),
+    getDefaultMiddleware({
+      serializableCheck: false, // Disable serializable checks to allow non-serializable data
+    }).concat(baseApi.middleware),
 });
 
 export const persistor = persistStore(store);
-
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export type AppStore = typeof store;

@@ -12,17 +12,23 @@ import {
   DropdownItem,
   Avatar,
   Button,
+  Badge,
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation"; // for navigation
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"; // Redux hooks
 import { logOut } from "@/redux/features/authSlice";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher"; // ThemeSwitcher component
+import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import CartModal from "./CartModal";
 
 export default function MergedNavbar() {
-  const dispatch = useAppDispatch();
   const router = useRouter(); // Programmatic navigation
-
+  const cartItems = useSelector((state: RootState) => state.cart.products);
+  const dispatch = useAppDispatch();
+  const totalUniqueProducts = cartItems.length;
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
   const token = useAppSelector((state) => state.auth.token); // Token from Redux store
@@ -54,7 +60,7 @@ export default function MergedNavbar() {
         {/* Logo and Brand */}
         <NavbarContent>
           <NavbarBrand>
-            <p className="font-bold text-inherit">PoshFoods</p>
+            <Link href="/">PoshFoods</Link>
           </NavbarBrand>
         </NavbarContent>
 
@@ -105,7 +111,12 @@ export default function MergedNavbar() {
             </Button>
           </form>
         </NavbarContent>
-
+        <NavbarContent>
+          <Badge content={totalUniqueProducts} color="secondary">
+            <FaShoppingCart size={24} />
+            <CartModal />
+          </Badge>
+        </NavbarContent>
         {/* User Profile, Theme Toggle */}
         <NavbarContent justify="end">
           {/* Dark/Light Mode Toggle */}
