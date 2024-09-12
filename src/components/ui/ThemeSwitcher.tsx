@@ -16,9 +16,8 @@ export function ThemeSwitcher() {
 
   return (
     <div>
-      The current theme is: {theme}
-      <button onClick={() => setTheme("light")}>Light Mode</button>
-      <button onClick={() => setTheme("dark")}>Dark Mode</button>
+      <button onClick={() => setTheme("light")}>Light </button>
+      <button onClick={() => setTheme("dark")}>Dark</button>
     </div>
   );
 }
