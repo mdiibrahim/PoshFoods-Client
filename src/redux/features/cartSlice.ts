@@ -17,7 +17,9 @@ const cartSlice = createSlice({
       const { product, quantity } = action.payload;
 
       // Check if the product already exists in the cart
-      const existingProduct = state.products.find((p) => p._id === product._id);
+      const existingProduct = state.products.find(
+        (p: { _id: string }) => p._id === product._id
+      );
 
       if (existingProduct) {
         // If the product exists, increment its quantity
@@ -84,7 +86,7 @@ export const selectTax = (state: any) =>
   selectTotalPrice(state) * state.taxRate;
 
 export const selectGrandTotal = (state: any) => {
-  return selectTotalPrice(state) + selectTotalPrice(state) * state.taxRate + 60;
+  return selectTotalPrice(state) + selectTotalPrice(state) * state.taxRate + 15;
 };
 
 export const { addToCart, updateQuantity, removeFromCart, clearCart } =

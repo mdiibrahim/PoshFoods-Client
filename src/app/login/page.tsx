@@ -4,9 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useLoginMutation } from "@/redux/api/authApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { setCredentials } from "@/redux/features/authSlice"; // Import setCredentials action
+
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +20,9 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(formData).unwrap();
+      const response = await login(formData).unwrap();
+      const { token } = response;
+      dispatch(setCredentials({ token })); // Dispatch token to Redux
       toast.success("Login successful!");
       router.push("/"); // Redirect to home or dashboard
     } catch (error) {

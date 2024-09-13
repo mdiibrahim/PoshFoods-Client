@@ -37,7 +37,7 @@ export default function MergedNavbar() {
   useEffect(() => {
     // Replace with real API call
     const fetchCategories = async () => {
-      const categoryData = ["Fruits", "Vegetables", "Dairy", "Beverages"]; // Simulated data
+      const categoryData = ["Fruits", "Vegetables", "Dairy", "Bakery", "Meat"]; // Simulated data
       setCategories(categoryData);
     };
     fetchCategories();
@@ -92,9 +92,7 @@ export default function MergedNavbar() {
           </Dropdown>
 
           <NavbarItem>
-            <Button href="/product" variant="flat">
-              All Products
-            </Button>
+            <Link href="/product">All Products</Link>
           </NavbarItem>
 
           {/* Search Bar */}

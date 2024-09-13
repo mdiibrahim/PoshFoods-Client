@@ -3,6 +3,7 @@
 import React from "react";
 import Slider from "react-slick";
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { useGetProductsQuery } from "@/redux/api/productApi";
 
 // Custom Arrow Component for the Slider
 function SampleNextArrow(props: any) {
@@ -41,32 +42,10 @@ function SamplePrevArrow(props: any) {
 }
 
 export default function FlashSale() {
-  const flashSaleProducts = [
-    {
-      title: "Fresh Apples",
-      img: "/images/apple.png",
-      price: "$2.99",
-      discount: "$3.50",
-    },
-    {
-      title: "Organic Milk",
-      img: "/images/milk.png",
-      price: "$5.49",
-      discount: "$6.00",
-    },
-    {
-      title: "Whole Wheat Bread",
-      img: "/images/bread.png",
-      price: "$1.99",
-      discount: "$2.50",
-    },
-    {
-      title: "Eggs - 12 Pack",
-      img: "/images/eggs.png",
-      price: "$3.99",
-      discount: "$4.50",
-    },
-  ];
+  const { data, isLoading } = useGetProductsQuery({ isFlashSale: true });
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   const settings = {
     dots: true,
@@ -84,8 +63,8 @@ export default function FlashSale() {
     <section className="py-16">
       <h2 className="text-3xl font-bold text-center mb-10">Flash Sale</h2>
       <Slider {...settings}>
-        {flashSaleProducts.map((item, index) => (
-          <div key={index}>
+        {data.data.map((item) => (
+          <div key={item._id}>
             <Card
               shadow="sm"
               isPressable
@@ -99,16 +78,14 @@ export default function FlashSale() {
                   width="100%"
                   alt={item.title}
                   className="object-cover w-full h-[140px]"
-                  src={item.img}
+                  src={item.image}
                 />
               </CardBody>
               <CardFooter className="justify-between px-2 py-4">
                 <span className="font-bold">{item.title}</span>
                 <div>
                   <span className="text-primary text-lg">{item.price}</span>
-                  <span className="text-gray-400 line-through ml-2">
-                    {item.discount}
-                  </span>
+                  <span className="text-gray-400 line-through ml-2">15</span>
                 </div>
               </CardFooter>
             </Card>

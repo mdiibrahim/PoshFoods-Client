@@ -1,30 +1,16 @@
 "use client";
 import React from "react";
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { useGetProductsQuery } from "@/redux/api/productApi";
+import { useRouter } from "next/navigation"; // Use Next.js router for navigation
 
 export default function PopularProducts() {
-  const popularProducts = [
-    {
-      title: "Bananas",
-      img: "/images/bananas.png",
-      price: "$1.29",
-    },
-    {
-      title: "Orange Juice",
-      img: "/images/orange-juice.png",
-      price: "$3.99",
-    },
-    {
-      title: "Potatoes",
-      img: "/images/potatoes.png",
-      price: "$0.99",
-    },
-    {
-      title: "Chicken Breast",
-      img: "/images/chicken.png",
-      price: "$6.49",
-    },
-  ];
+  const { data, isLoading } = useGetProductsQuery({ isPopular: true });
+  const router = useRouter(); // Initialize router for navigation
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <section className="py-16">
@@ -32,13 +18,14 @@ export default function PopularProducts() {
         Most Popular Products
       </h2>
       <div className="gap-4 grid grid-cols-2 sm:grid-cols-4">
-        {popularProducts.map((item, index) => (
+        {data.data.map((item) => (
           <Card
             shadow="sm"
-            key={index}
+            key={item._id}
             isPressable
             className="hover:scale-105 transition-transform duration-300 ease-in-out"
-            onPress={() => console.log(`${item.title} pressed`)}
+            // Navigate to product details page when pressed
+            onPress={() => router.push(`/product/${item._id}`)}
           >
             <CardBody className="p-0 overflow-visible">
               <Image
@@ -47,12 +34,12 @@ export default function PopularProducts() {
                 width="100%"
                 alt={item.title}
                 className="object-cover w-full h-[140px]"
-                src={item.img}
+                src={item.image}
               />
             </CardBody>
-            <CardFooter className="justify-between px-2 py-4">
+            <CardFooter className="justify-between text-primary px-2 py-4">
               <span className="font-bold">{item.title}</span>
-              <span className="text-primary text-lg">{item.price}</span>
+              <span className=" text-lg">${item.price}</span>
             </CardFooter>
           </Card>
         ))}

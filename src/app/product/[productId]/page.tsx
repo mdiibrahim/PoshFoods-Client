@@ -36,9 +36,7 @@ const ProductDetails = () => {
     dispatch(addToCart({ product, quantity }));
   };
 
-  const handleBuyNow = () => {
-    // Redirect to checkout
-  };
+  const handleBuyNow = () => {};
   return (
     <div className="container mx-auto px-4 py-10">
       <div className="grid grid-cols-12 gap-6">
