@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { useGetProductsQuery } from "@/redux/api/productApi";
 import { useRouter } from "next/navigation"; // Use Next.js router for navigation
 
@@ -14,9 +14,18 @@ export default function PopularProducts() {
 
   return (
     <section className="py-16">
-      <h2 className="text-3xl font-bold text-center mb-10">
-        Most Popular Products
-      </h2>
+      <div className="flex flex-col lg:flex-row lg:justify-between mb-6">
+        <h2 className="text-2xl font-bold text-center mb-4 lg:mb-0 lg:text-3xl">
+          Most Popular Products{" "}
+        </h2>
+        {/* See All Button */}
+        <Button
+          onClick={() => router.push(`/product?isPopular=true`)}
+          className="w-full lg:w-auto"
+        >
+          See All
+        </Button>
+      </div>
       <div className="gap-4 grid grid-cols-2 sm:grid-cols-4">
         {data.data.map((item) => (
           <Card

@@ -47,10 +47,13 @@ export default function MergedNavbar() {
     dispatch(logOut());
     router.push("/login");
   };
-
+  const handleCategoryClick = (category: string) => {
+    router.push(`/product?category=${encodeURIComponent(category)}`);
+  };
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle the search logic here
+    router.push(`/product?searchTerm=${encodeURIComponent(searchQuery)}`);
     console.log("Search query: ", searchQuery);
   };
 
@@ -83,7 +86,12 @@ export default function MergedNavbar() {
             <DropdownMenu aria-label="Categories">
               {categories.length > 0 ? (
                 categories.map((category, index) => (
-                  <DropdownItem key={index}>{category}</DropdownItem>
+                  <DropdownItem
+                    key={index}
+                    onClick={() => handleCategoryClick(category)}
+                  >
+                    {category}
+                  </DropdownItem>
                 ))
               ) : (
                 <DropdownItem>Loading...</DropdownItem>
