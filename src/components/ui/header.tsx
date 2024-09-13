@@ -16,7 +16,7 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation"; // for navigation
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"; // Redux hooks
-import { logOut } from "@/redux/features/authSlice";
+import { logout } from "@/redux/features/authSlice";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher"; // ThemeSwitcher component
 import Link from "next/link";
@@ -44,7 +44,7 @@ export default function MergedNavbar() {
   }, []);
 
   const handleLogout = () => {
-    dispatch(logOut());
+    dispatch(logout());
     router.push("/login");
   };
   const handleCategoryClick = (category: string) => {
@@ -146,7 +146,9 @@ export default function MergedNavbar() {
                 <DropdownItem key="profile">
                   <p className="font-semibold">Signed in as John</p>
                 </DropdownItem>
-                <DropdownItem key="settings">My Dashboard</DropdownItem>
+                <DropdownItem key="settings">
+                  <Link href="/dashboard">My Dashboard</Link>
+                </DropdownItem>
                 <DropdownItem
                   key="logout"
                   color="danger"

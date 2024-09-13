@@ -21,8 +21,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await login(formData).unwrap();
-      const { token } = response;
-      dispatch(setCredentials({ token })); // Dispatch token to Redux
+      dispatch(setCredentials({ token: response.token }));
       toast.success("Login successful!");
       router.push("/"); // Redirect to home or dashboard
     } catch (error) {

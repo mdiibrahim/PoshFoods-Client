@@ -16,7 +16,6 @@ export default function Products() {
       query[key] = value;
     }
   });
-  console.log(query);
 
   const { data, error, isLoading } = useGetProductsQuery(query);
 

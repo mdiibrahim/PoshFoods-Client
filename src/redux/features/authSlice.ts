@@ -1,12 +1,25 @@
-// src/redux/features/authSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
+
+interface DecodedToken {
+  email: string;
+  _id: string;
+  role: string;
+  exp: number;
+  iat: number;
+}
 
 interface AuthState {
   token: string | null;
+  role: string | null;
+  isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {
-  token: typeof window !== "undefined" ? localStorage.getItem("token") : null, // Get token from localStorage if exists
+  token: Cookies.get("token") || null, // Get token from cookies
+  role: null,
+  isAuthenticated: !!Cookies.get("token"), // Check if token exists in cookies
 };
 
 const authSlice = createSlice({
@@ -14,16 +27,45 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action: PayloadAction<{ token: string }>) => {
-      state.token = action.payload.token;
-      localStorage.setItem("token", action.payload.token); // Save token to localStorage
+      const { token } = action.payload;
+
+      try {
+        const decoded: DecodedToken = jwtDecode<DecodedToken>(token);
+        state.token = token;
+        state.role = decoded.role;
+        state.isAuthenticated = true;
+
+        // Save token to cookies
+        Cookies.set("token", token);
+      } catch (error) {
+        console.error("Invalid token:", error);
+        state.isAuthenticated = false;
+      }
     },
-    logOut: (state) => {
+    logout: (state) => {
       state.token = null;
-      localStorage.removeItem("token"); // Remove token from localStorage
+      state.role = null;
+      state.isAuthenticated = false;
+
+      // Remove token from cookies
+      Cookies.remove("token");
+    },
+    loadUserFromToken: (state) => {
+      const token = Cookies.get("token");
+      if (token) {
+        try {
+          const decoded: DecodedToken = jwtDecode<DecodedToken>(token);
+          state.token = token;
+          state.role = decoded.role;
+          state.isAuthenticated = true;
+        } catch (error) {
+          console.error("Failed to decode token:", error);
+          state.isAuthenticated = false;
+        }
+      }
     },
   },
 });
 
-export const { setCredentials, logOut } = authSlice.actions;
-
+export const { setCredentials, logout, loadUserFromToken } = authSlice.actions;
 export default authSlice.reducer;

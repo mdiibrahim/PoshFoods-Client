@@ -14,9 +14,9 @@ export default function PopularProducts() {
 
   return (
     <section className="py-16">
-      <div className="flex flex-col lg:flex-row lg:justify-between mb-6">
-        <h2 className="text-2xl font-bold text-center mb-4 lg:mb-0 lg:text-3xl">
-          Most Popular Products{" "}
+      <div className="flex  justify-between mb-6">
+        <h2 className="text-2xl font-bold text-center mb-4 lg:mb-0 ">
+          Most Popular Products
         </h2>
         {/* See All Button */}
         <Button
