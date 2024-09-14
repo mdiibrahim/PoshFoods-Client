@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -11,76 +12,82 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 import { CATEGORIES } from "@/constant/category";
-import {
-  useCreateProductMutation,
-  useUpdateProductMutation,
-} from "@/redux/api/productApi";
+import { useUpdateProductMutation } from "@/redux/api/productApi";
 import { toast } from "react-toastify";
 
 interface ProductModalProps {
-  product?: any; // For the update case
+  product?: any; // Product data to populate form
   onClose: () => void;
   isOpen: boolean;
-  isUpdate?: boolean; // Is it for updating the product?
 }
 
 const ProductModal: React.FC<ProductModalProps> = ({
   product,
   onClose,
   isOpen,
-  isUpdate,
 }) => {
-  const [createProduct, { isLoading }] = useCreateProductMutation();
-  const [updateProduct] = useUpdateProductMutation();
+  const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
-  const initialState = {
-    title: product?.title || "",
-    description: product?.description || "",
-    price: product?.price || "",
-    category: product?.category || CATEGORIES[0],
-    tags: product?.tags.join(",") || "",
-    quantity: product?.quantity || "",
-    inStock: product?.inStock || true,
-    image: product?.image || "",
-    isPopular: product?.isPopular || false,
-    isFlashSale: product?.isFlashSale || false,
-    additionalImages: product?.additionalImages || [""],
-    features: product?.features || [""],
-  };
+  const [productState, setProductState] = useState({
+    title: "",
+    description: "",
+    price: "",
+    category: CATEGORIES[0],
+    tags: "",
+    quantity: "",
+    inStock: false,
+    image: "",
+    isPopular: product.isPopular,
+    isFlashSale: product.isFlashSale,
+    additionalImages: [""],
+    features: [""],
+  });
 
-  const [productState, setProductState] = useState(initialState);
+  // Set default values when product changes
+  useEffect(() => {
+    if (product) {
+      setProductState({
+        title: product.title || "",
+        description: product.description || "",
+        price: product.price || "",
+        category: product.category || CATEGORIES[0],
+        tags: product.tags.join(",") || "",
+        quantity: product.quantity || "",
+        inStock: product.inStock || true,
+        image: product.image || "",
+        isPopular: product.isPopular || false,
+        isFlashSale: product.isFlashSale || false,
+        additionalImages: product.additionalImages || [""],
+        features: product.features || [""],
+      });
+    }
+  }, [product]);
 
   const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-
     setProductState({
       ...productState,
       [name]:
         name === "inStock" || name === "isPopular" || name === "isFlashSale"
-          ? value === "true" // Convert "true"/"false" strings to booleans
+          ? value === "true" // Convert string to boolean
           : value,
     });
   };
 
-  // Handle additional images input change
   const handleAdditionalImagesChange = (index: number, value: string) => {
     const updatedImages = [...productState.additionalImages];
     updatedImages[index] = value;
     setProductState({ ...productState, additionalImages: updatedImages });
   };
 
-  // Handle features input change
   const handleFeaturesChange = (index: number, value: string) => {
     const updatedFeatures = [...productState.features];
     updatedFeatures[index] = value;
     setProductState({ ...productState, features: updatedFeatures });
   };
 
-  // Add new additional image input
   const addAdditionalImageField = () => {
     setProductState({
       ...productState,
@@ -88,7 +95,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
     });
   };
 
-  // Add new feature input
   const addFeatureField = () => {
     setProductState({
       ...productState,
@@ -110,32 +116,24 @@ const ProductModal: React.FC<ProductModalProps> = ({
     }
 
     try {
-      if (isUpdate) {
-        await updateProduct({
-          id: product._id,
-          updatedData: productData,
-        }).unwrap();
-        toast.success("Product updated successfully!");
-      } else {
-        await createProduct(productData).unwrap();
-        toast.success("Product created successfully!");
-      }
-      onClose();
+      await updateProduct({
+        id: product._id,
+        updatedData: productData,
+      }).unwrap();
+      toast.success("Product updated successfully!");
+      onClose(); // Close the modal after updating
     } catch (error) {
-      toast.error("Failed to save product. Please try again.");
-      console.error("Error saving product:", error);
+      toast.error("Failed to update product. Please try again.");
+      console.error("Error updating product:", error);
     }
   };
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onClose} placement="center">
       <ModalContent>
-        <ModalHeader>
-          {isUpdate ? "Update Product" : "Add New Product"}
-        </ModalHeader>
+        <ModalHeader>Update Product</ModalHeader>
         <ModalBody>
           <Input
-            type="text"
             label="Product Title"
             name="title"
             value={productState.title}
@@ -143,7 +141,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
             required
           />
           <Input
-            type="text"
             label="Product Description"
             name="description"
             value={productState.description}
@@ -151,7 +148,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
             required
           />
           <Input
-            type="text"
             label="Price"
             name="price"
             value={productState.price}
@@ -159,7 +155,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
             required
           />
           <Input
-            type="text"
             label="Quantity"
             name="quantity"
             value={productState.quantity}
@@ -167,14 +162,12 @@ const ProductModal: React.FC<ProductModalProps> = ({
             required
           />
           <Input
-            type="text"
             label="Tags (comma-separated)"
             name="tags"
             value={productState.tags}
             onChange={handleInputChange}
           />
           <Input
-            type="text"
             label="Image URL"
             name="image"
             value={productState.image}
@@ -182,95 +175,114 @@ const ProductModal: React.FC<ProductModalProps> = ({
             required
           />
           <div>
-            <label className="block font-bold">Additional Images</label>
+            <label>Additional Images</label>
             {productState.additionalImages.map((image, index) => (
-              <div key={index} className="flex items-center mb-2">
-                <Input
-                  type="text"
-                  placeholder={`Additional Image ${index + 1}`}
-                  value={image}
-                  onChange={(e) =>
-                    handleAdditionalImagesChange(index, e.target.value)
-                  }
-                  className="w-full"
-                />
-              </div>
+              <Input
+                key={index}
+                placeholder={`Additional Image ${index + 1}`}
+                value={image}
+                onChange={(e) =>
+                  handleAdditionalImagesChange(index, e.target.value)
+                }
+              />
             ))}
             <Button onPress={addAdditionalImageField}>Add Image</Button>
           </div>
           <div>
-            <label className="block font-bold">Features</label>
+            <label>Features</label>
             {productState.features.map((feature, index) => (
-              <div key={index} className="flex items-center mb-2">
-                <Input
-                  type="text"
-                  placeholder={`Feature ${index + 1}`}
-                  value={feature}
-                  onChange={(e) => handleFeaturesChange(index, e.target.value)}
-                  className="w-full"
-                />
-              </div>
+              <Input
+                key={index}
+                placeholder={`Feature ${index + 1}`}
+                value={feature}
+                onChange={(e) => handleFeaturesChange(index, e.target.value)}
+              />
             ))}
             <Button onPress={addFeatureField}>Add Feature</Button>
           </div>
+
+          <Select
+            label="In Stock"
+            placeholder="Select stock status"
+            selectedKeys={productState.inStock ? ["true"] : ["false"]}
+            onSelectionChange={(selected) => {
+              const selectedValue = Array.from(selected).join(""); // Convert selection to a string
+              setProductState({
+                ...productState,
+                inStock: selectedValue === "true",
+              });
+            }}
+            className="max-w-xs"
+          >
+            <SelectItem key="true" value="true">
+              True
+            </SelectItem>
+            <SelectItem key="false" value="false">
+              False
+            </SelectItem>
+          </Select>
+
+          <Select
+            label="Popular Product"
+            placeholder="Select status"
+            selectedKeys={productState.isPopular ? ["true"] : ["false"]}
+            onSelectionChange={(selected) => {
+              const selectedValue = Array.from(selected).join(""); // Convert selection to a string
+              setProductState({
+                ...productState,
+                isPopular: selectedValue === "true",
+              });
+            }}
+            className="max-w-xs"
+          >
+            <SelectItem key="true" value="true">
+              True
+            </SelectItem>
+            <SelectItem key="false" value="false">
+              False
+            </SelectItem>
+          </Select>
+
+          <Select
+            label="Flash Sale"
+            placeholder="Select sale status"
+            selectedKeys={productState.isFlashSale ? ["true"] : ["false"]}
+            onSelectionChange={(selected) => {
+              const selectedValue = Array.from(selected).join(""); // Convert selection to a string
+              setProductState({
+                ...productState,
+                isFlashSale: selectedValue === "true",
+              });
+            }}
+            className="max-w-xs"
+          >
+            <SelectItem key="true" value="true">
+              True
+            </SelectItem>
+            <SelectItem key="false" value="false">
+              False
+            </SelectItem>
+          </Select>
+
           <Select
             label="Category"
             name="category"
-            value={productState.category}
-            onChange={(e) =>
-              setProductState({ ...productState, category: e as string })
-            }
+            placeholder="Select category"
+            selectedKeys={[productState.category]}
+            onSelectionChange={(selected) => {
+              const selectedValue = Array.from(selected).join(""); // Convert selection to a string
+              setProductState({
+                ...productState,
+                category: selectedValue,
+              });
+            }}
+            className="max-w-xs"
           >
             {CATEGORIES.map((category) => (
               <SelectItem key={category} value={category}>
                 {category}
               </SelectItem>
             ))}
-          </Select>
-          <Select
-            label="In Stock"
-            name="inStock"
-            value={productState.inStock.toString()}
-            onChange={(e) =>
-              setProductState({ ...productState, inStock: e === "true" })
-            }
-          >
-            <SelectItem key="true" value="true">
-              True
-            </SelectItem>
-            <SelectItem key="false" value="false">
-              False
-            </SelectItem>
-          </Select>
-          <Select
-            label="Popular Product"
-            name="isPopular"
-            value={productState.isPopular.toString()}
-            onChange={(e) =>
-              setProductState({ ...productState, isPopular: e === "true" })
-            }
-          >
-            <SelectItem key="false" value="false">
-              False
-            </SelectItem>
-            <SelectItem key="true" value="true">
-              True
-            </SelectItem>
-          </Select>
-          <Select
-            label="Flash Sale"
-            name="isFlashSale"
-            value={productState.isFlashSale.toString()}
-            onChange={(e) =>
-              setProductState({ ...productState, isFlashSale: e === "true" })
-            }
-          >
-            <SelectItem key="false" value="false">
-              False
-            </SelectItem>
-            <SelectItem key="true" value="true">
-              True
-            </SelectItem>
           </Select>
         </ModalBody>
         <ModalFooter>
@@ -282,7 +294,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
             onPress={handleSaveProduct}
             isLoading={isLoading}
           >
-            {isUpdate ? "Update Product" : "Add Product"}
+            Save Changes
           </Button>
         </ModalFooter>
       </ModalContent>

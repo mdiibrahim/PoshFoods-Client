@@ -22,7 +22,7 @@ export const orderApi = baseApi.injectEndpoints({
       query: ({ id, status }) => ({
         url: `/order/${id}`,
         method: "PUT",
-        body: { isOrdered: status },
+        body: { status },
       }),
     }),
   }),

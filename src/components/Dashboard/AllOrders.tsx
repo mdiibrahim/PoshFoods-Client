@@ -10,10 +10,9 @@ const AdminOrderManagement: React.FC = () => {
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
   const handleStatusChange = async (id: string, status: string) => {
-    console.log(id, status);
     try {
       const response = await updateOrderStatus({ id, status }).unwrap();
-
+      console.log(response);
       toast.success(
         `Order ${response._id} status updated to ${response.status}`
       );
@@ -24,7 +23,6 @@ const AdminOrderManagement: React.FC = () => {
   };
 
   if (isLoading) return <p>Loading orders...</p>;
-  if (error) return <p>Error loading orders</p>;
 
   return (
     <div>
@@ -38,20 +36,17 @@ const AdminOrderManagement: React.FC = () => {
             <div>
               <h4 className="font-bold text-lg">{order.user.name}'s Order</h4>
               <p className="text-gray-700">Order ID: {order._id}</p>
-              <p className="text-gray-700">Status: {order.status}</p>
+              <p className="text-gray-700">Status: {order.isOrdered}</p>
             </div>
             <div className="flex space-x-2">
               <button
-                onClick={() => handleStatusChange(order._id, "Pending")}
-                disabled={order.status === "Pending"}
-                className="bg-yellow-500 text-white py-2 px-4 rounded"
-              >
-                Set to Pending
-              </button>
-              <button
                 onClick={() => handleStatusChange(order._id, "delivered")}
-                disabled={order.status === "delivered"}
-                className="bg-green-500 text-white py-2 px-4 rounded"
+                disabled={order.isOrdered === "delivered"}
+                className={`px-4 py-2 rounded-lg text-white ${
+                  order.isOrdered === "delivered"
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-green-500 hover:bg-green-600"
+                }`}
               >
                 Mark as Delivered
               </button>

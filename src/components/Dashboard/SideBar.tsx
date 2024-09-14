@@ -7,7 +7,7 @@ interface SidebarProps {
 }
 export default function Sidebar({ setActiveSection, options }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(options);
+
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
