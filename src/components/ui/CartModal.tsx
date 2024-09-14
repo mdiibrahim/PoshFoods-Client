@@ -12,11 +12,30 @@ import {
 } from "@nextui-org/react";
 import CartDetails from "@/components/ui/CartDetails";
 import { useAppSelector } from "@/redux/hooks";
-import OrderSummaryModal from "@/components/ui/OrderSummaryModal";
+import { useRouter } from "next/navigation";
 
 const CartModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const cartItems = useAppSelector((state) => state.cart.products);
+  const totalPrice = useAppSelector((state) => state.cart.totalPrice);
+  const tax = useAppSelector((state) => state.cart.tax);
+  const grandTotal = useAppSelector((state) => state.cart.grandTotal);
+  const router = useRouter();
+
+  const handleProceedToCheckout = () => {
+    // Save order summary to localStorage
+    const orderSummary = {
+      cartItems,
+      totalPrice,
+      tax,
+      deliveryFee: 15,
+      grandTotal,
+    };
+    localStorage.setItem("orderSummary", JSON.stringify(orderSummary));
+    onOpenChange();
+    // Redirect to the checkout page
+    router.push("/checkout");
+  };
 
   return (
     <>
@@ -39,7 +58,15 @@ const CartModal = () => {
                 )}
               </ModalBody>
               <ModalFooter>
-                <OrderSummaryModal />
+                <div className="flex justify-between w-full">
+                  <Button
+                    onPress={handleProceedToCheckout}
+                    isDisabled={cartItems.length === 0}
+                    className="bg-primary"
+                  >
+                    Proceed to Checkout
+                  </Button>
+                </div>
               </ModalFooter>
             </>
           )}

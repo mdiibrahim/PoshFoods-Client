@@ -6,6 +6,7 @@ import { updateQuantity, removeFromCart } from "@/redux/features/cartSlice";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 
 import React from "react";
+import Image from "next/image";
 
 const CartDetails = ({ product }: any) => {
   const dispatch = useAppDispatch();
@@ -17,10 +18,11 @@ const CartDetails = ({ product }: any) => {
 
   return (
     <div className="flex items-center justify-between space-x-4 border border-gray-300 rounded-lg p-4 bg-white shadow-md transition-transform transform hover:scale-105 hover:shadow-lg w-full  mx-auto">
-      <img
+      <Image
         src={product.image}
-        alt={product.name}
-        className="w-24 h-24 object-cover rounded-md"
+        alt="Landscape picture"
+        width={80}
+        height={80}
       />
       <div className="flex-grow mx-4">
         <h3 className="text-lg font-semibold text-black truncate mb-2">

@@ -3,7 +3,6 @@
 
 import React from "react";
 import CartDetails from "@/components/ui/CartDetails";
-import OrderSummary from "@/components/ui/OrderSummaryModal";
 import { useAppSelector } from "@/redux/hooks";
 
 const CartPage = () => {
@@ -21,7 +20,6 @@ const CartPage = () => {
             <p className="text-2xl text-red-500">No products found</p>
           )}
         </div>
-        <OrderSummary />
       </div>
     </div>
   );
