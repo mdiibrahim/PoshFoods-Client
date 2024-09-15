@@ -17,7 +17,7 @@ const categories = [
 
 const Categories = () => {
   return (
-    <section className="py-16 bg-backgroundColor dark:bg-darkBackground">
+    <section className="py-16  dark:bg-darkBackground">
       <h2 className="text-3xl font-bold text-center mb-10 text-primary dark:text-darkText">
         Food Categories
       </h2>
@@ -34,7 +34,7 @@ const Categories = () => {
             className="group"
           >
             <motion.div
-              className="bg-backgroundColor dark:bg-[#1B263B] p-6 text-center shadow-lg rounded-lg group-hover:scale-105 transition-transform transform cursor-pointer hover:shadow-xl"
+              className=" dark:bg-[#1B263B] p-6 text-center shadow-lg rounded-lg group-hover:scale-105 transition-transform transform cursor-pointer hover:shadow-xl"
               whileHover={{ scale: 1.05 }}
             >
               <div className="h-40 mb-4">

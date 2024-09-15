@@ -82,7 +82,7 @@ export default function FlashSale() {
 
   return (
     <motion.section
-      className="py-8 px-4 sm:px-6 lg:px-8 bg-backgroundColor dark:bg-[#1B263B]"
+      className="py-8 px-4 sm:px-6 lg:px-8  dark:bg-[#1B263B]"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -122,7 +122,7 @@ export default function FlashSale() {
                     src={item.image}
                   />
                 </CardBody>
-                <CardFooter className="justify-between px-2 py-4 bg-backgroundColor dark:bg-[#1B263B]">
+                <CardFooter className="justify-between px-2 py-4  dark:bg-[#1B263B]">
                   <span className="font-bold text-sm lg:text-base text-[#1B263B] dark:text-white">
                     {item.title}
                   </span>

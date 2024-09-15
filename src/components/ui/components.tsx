@@ -37,7 +37,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
         />
 
         {/* Main content, flex-grow makes sure it takes available space */}
-        <main className="flex-grow container mx-auto px-4  bg-backgroundColor text-textColor dark:bg-darkBackground dark:text-darkText">
+        <main className="flex-grow container mx-auto px-4  text-textColor dark:bg-darkBackground dark:text-darkText">
           {children}
         </main>
 

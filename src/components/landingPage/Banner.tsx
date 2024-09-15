@@ -9,7 +9,7 @@ import { Button } from "@nextui-org/react";
 const Banner = () => {
   return (
     <motion.section
-      className="relative w-full h-screen bg-backgroundColor dark:bg-darkBackground"
+      className="relative w-full h-screen  dark:bg-darkBackground"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
@@ -19,10 +19,9 @@ const Banner = () => {
           src={banner}
           alt="Full-Screen Banner Image"
           layout="fill"
-          objectFit="cover"
           objectPosition="center"
           priority
-          className="opacity-30"
+          className="bg-black opacity-30"
         />
       </div>
 

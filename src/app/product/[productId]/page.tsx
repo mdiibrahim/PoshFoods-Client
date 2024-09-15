@@ -9,12 +9,14 @@ import {
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
+
 import { addToCart } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"; // Import authentication and redux hooks
 import { toast } from "react-toastify";
 import { FaStar } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useState } from "react";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -106,8 +108,9 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <div className="grid grid-cols-12 gap-6">
+    // Enhance spacing, typography, and layout consistency
+    <div className="container m-auto px-4 py-12">
+      <div className="grid grid-cols-12 gap-8">
         {/* Left Section - Product Images */}
         <div className="col-span-12 md:col-span-6 flex flex-col items-center">
           {/* Main Product Image */}
@@ -116,18 +119,18 @@ const ProductDetails = () => {
             alt={product.title}
             width={500}
             height={500}
-            className="w-full h-auto object-cover rounded-lg"
+            className="w-full h-auto object-cover rounded-lg shadow-lg"
           />
           {/* Additional Images */}
           <div className="grid grid-cols-3 gap-2 mt-4">
-            {images.map((img: string, index: number) => (
+            {images.map((img: string, index: string) => (
               <Image
                 key={index}
                 src={img}
-                alt={`Additional image ${index + 1}`}
+                alt={`Additional image`}
                 width={150}
                 height={150}
-                className="w-full h-auto object-cover rounded-lg"
+                className="w-full h-auto object-cover rounded-lg shadow-md"
               />
             ))}
           </div>
@@ -135,70 +138,92 @@ const ProductDetails = () => {
 
         {/* Right Section - Product Details */}
         <div className="col-span-12 md:col-span-6">
-          <h1 className="text-4xl font-bold mb-4">{product.title}</h1>
-          <p className="text-xl text-gray-600 mb-4">${product.price}</p>
+          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
+            {product.title}
+          </h1>
+          <p className="text-xl text-primary dark:text-yellow-400 mb-4">
+            ${product.price}
+          </p>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            {product.description}
+          </p>
 
-          <p className="mb-6">{product.description}</p>
-
-          {/* Quantity Selector and Add to Cart / Buy Now */}
-          <div className="flex items-center gap-4 my-4">
-            <div className="flex items-center">
-              <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>
+          {/* Quantity Selector */}
+          <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center border rounded-lg">
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-l-lg"
+              >
                 -
               </button>
               <input
                 type="text"
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
-                className="w-12 text-center bg-white text-black border mx-2"
+                className="w-12 text-center text-black dark:bg-gray-800 dark:text-white"
               />
-              <button onClick={() => setQuantity(quantity + 1)}>+</button>
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-r-lg"
+              >
+                +
+              </button>
             </div>
-            <Button
-              onClick={handleAddToCart}
-              className="bg-blue-500 text-white"
-            >
+            <Button onClick={handleAddToCart} className="bg-primary text-white">
               Add to Cart
             </Button>
-            <Button onClick={handleBuyNow} className="bg-green-500 text-white">
+            <Button onClick={handleBuyNow} className="bg-secondary text-white">
               Buy Now
             </Button>
           </div>
 
-          {/* Additional Info (Shipping & Returns) */}
-          <div className="mt-6">
-            <p>Shipping charges on all orders $60</p>
-            <p>
-              Delivers in 3-7 working days{" "}
-              <a href="/shipping" className="underline">
-                Shipping & Return
-              </a>
-            </p>
-          </div>
-
           {/* Features */}
-          <div className="my-8">
-            <h2 className="text-2xl font-bold mb-2">Features</h2>
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-2 text-gray-800 dark:text-white">
+              Features
+            </h2>
             <ul className="list-disc list-inside">
-              {features.map((feature: string, index: number) => (
-                <li key={index} className="text-gray-700">
+              {features.map((feature: string, index: string) => (
+                <li key={index} className="text-gray-700 dark:text-gray-300">
                   {feature}
                 </li>
               ))}
             </ul>
           </div>
+
+          {/* Shipping Info */}
+          <div className="mb-6">
+            <p className="text-gray-500 dark:text-gray-400">
+              Free shipping on orders over $60.
+            </p>
+            <p className="text-gray-500 dark:text-gray-400">
+              Delivery within 3-7 working days.{" "}
+              <Link href="/shipping">
+                <span className="underline text-primary">
+                  Shipping & Return
+                </span>
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Long Description */}
-      <div className="my-10">
-        <h2 className="text-2xl font-bold mb-4">Description</h2>
-        <p className="text-gray-700 leading-relaxed">{longDescription}</p>
+      <div className="my-12">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
+          Product Description
+        </h2>
+        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+          {longDescription}
+        </p>
       </div>
 
       {/* Reviews Section */}
-      <div className="my-10">
-        <h2 className="text-2xl font-bold mb-4">Reviews</h2>
+      <div className="my-12">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
+          Customer Reviews
+        </h2>
         {isReviewsLoading ? (
           <p>Loading reviews...</p>
         ) : reviewsError ? (
@@ -206,39 +231,49 @@ const ProductDetails = () => {
         ) : reviews.length === 0 ? (
           <p>No reviews yet.</p>
         ) : (
-          <ul>
-            {reviews.map((review: any, index: number) => (
-              <li key={index} className="mb-4">
-                <div className="flex justify-between items-center">
-                  <p className="font-bold">{review.user.name}</p>
-                  {/* Display stars for the rating */}
-                  <div className="flex">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <FaStar
-                        key={star}
-                        className={`text-2xl ${
-                          star <= review.rating
-                            ? "text-yellow-500"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
+          <ul className="space-y-6">
+            {reviews.map(
+              (
+                review: any,
+
+                index: string
+              ) => (
+                <li key={index} className="border-b pb-4">
+                  <div className="flex justify-between items-center">
+                    <p className="font-bold text-gray-900 dark:text-white">
+                      {review.user.name}
+                    </p>
+                    <div className="flex">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <FaStar
+                          key={star}
+                          className={`text-lg ${
+                            star <= review.rating
+                              ? "text-yellow-500"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <p className="text-gray-700">{review.comment}</p>
-              </li>
-            ))}
+                  <p className="text-gray-700 dark:text-gray-400 mt-2">
+                    {review.comment}
+                  </p>
+                </li>
+              )
+            )}
           </ul>
         )}
 
-        {/* Add Review Section (For Authenticated Users Only) */}
-
+        {/* Add Review Section */}
         <div className="mt-8">
-          <h3 className="text-xl font-bold mb-2">Add a Review</h3>
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+            Add a Review
+          </h3>
           <textarea
             value={reviewComment}
             onChange={(e) => setReviewComment(e.target.value)}
-            placeholder="Write your review here..."
+            placeholder="Write your review..."
             className="p-4 border border-gray-300 rounded-lg w-full mb-4 focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <div className="flex items-center mb-4">
@@ -247,15 +282,15 @@ const ProductDetails = () => {
               <FaStar
                 key={star}
                 onClick={() => setRating(star)}
-                className={`cursor-pointer text-3xl transition-colors duration-300 ${
+                className={`cursor-pointer text-3xl ${
                   star <= rating ? "text-yellow-500" : "text-gray-300"
                 }`}
               />
             ))}
           </div>
           <Button
-            onPress={handleSubmitReview}
-            className="mt-2 bg-blue-500 text-white"
+            onClick={handleSubmitReview}
+            className="bg-blue-500 text-white"
           >
             Submit Review
           </Button>

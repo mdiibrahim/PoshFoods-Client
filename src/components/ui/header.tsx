@@ -25,6 +25,7 @@ import CartModal from "./CartModal";
 import Image from "next/image";
 import logo from "@/assests/logo.webp";
 import ThemeSwitcher from "./ThemeSwitcher"; // Import ThemeSwitcher
+import { CATEGORIES } from "@/constant/category";
 
 export default function MergedNavbar() {
   const router = useRouter();
@@ -39,8 +40,7 @@ export default function MergedNavbar() {
   // Fetch categories (example implementation)
   useEffect(() => {
     const fetchCategories = async () => {
-      const categoryData = ["Fruits", "Vegetables", "Dairy", "Bakery", "Meat"];
-      setCategories(categoryData);
+      setCategories(CATEGORIES);
     };
     fetchCategories();
   }, []);

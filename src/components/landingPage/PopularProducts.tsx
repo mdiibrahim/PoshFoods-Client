@@ -16,7 +16,7 @@ export default function PopularProducts() {
 
   return (
     <motion.section
-      className="py-16 bg-backgroundColor dark:bg-darkBackground"
+      className="py-16  dark:bg-darkBackground"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
