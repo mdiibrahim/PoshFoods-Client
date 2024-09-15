@@ -9,7 +9,7 @@ import { Button } from "@nextui-org/react";
 const Banner = () => {
   return (
     <motion.section
-      className="relative w-full h-screen  dark:bg-darkBackground"
+      className="relative h-screen  dark:bg-darkBackground"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}

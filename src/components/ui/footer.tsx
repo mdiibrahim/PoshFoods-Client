@@ -13,7 +13,7 @@ const Footer = () => {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4 md:px-0">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 lg:px-4 ">
         <div className="flex flex-col items-center md:items-start">
           <Image src={logo} alt="PoshFoods Logo" width={150} height={150} />
           <h3 className="text-xl font-semibold mb-4 mt-2">PoshFoods</h3>

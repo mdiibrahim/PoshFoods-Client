@@ -82,7 +82,7 @@ export default function FlashSale() {
 
   return (
     <motion.section
-      className="py-8 px-4 sm:px-6 lg:px-8  dark:bg-[#1B263B]"
+      className="py-8  lg:px-8  dark:bg-[#1B263B]"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -118,7 +118,7 @@ export default function FlashSale() {
                     radius="lg"
                     width="100%"
                     alt={item.title}
-                    className="object-cover w-full h-[140px]"
+                    className="object-cover h-[140px]"
                     src={item.image}
                   />
                 </CardBody>

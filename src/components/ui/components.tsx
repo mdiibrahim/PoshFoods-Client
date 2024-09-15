@@ -16,13 +16,23 @@ const Container = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <div className="flex flex-col">
+      <div className="flex flex-col min-h-screen">
         {/* Ensure the header stretches across the entire width */}
-        <header className="w-full">
+        <header className="min-w-full">
           <Header />
         </header>
 
         {/* ToastContainer at the top of the page */}
+
+        {/* Main content, flex-grow makes sure it takes available space */}
+        <main className="flex-grow container mx-auto px-4 text-textColor dark:bg-darkBackground dark:text-darkText">
+          {children}
+        </main>
+
+        {/* Footer sticks to the bottom */}
+        <footer className="w-full">
+          <Footer />
+        </footer>
         <ToastContainer
           position="top-center"
           autoClose={5000}
@@ -35,16 +45,6 @@ const Container = ({ children }: { children: React.ReactNode }) => {
           pauseOnHover
           theme="colored"
         />
-
-        {/* Main content, flex-grow makes sure it takes available space */}
-        <main className="flex-grow container mx-auto px-4 min-h-screen  text-textColor dark:bg-darkBackground dark:text-darkText">
-          {children}
-        </main>
-
-        {/* Footer sticks to the bottom */}
-        <footer className="w-full">
-          <Footer />
-        </footer>
       </div>
     </ThemeProvider>
   );

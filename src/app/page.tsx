@@ -7,7 +7,7 @@ import Reviews from "@/components/landingPage/Reviews";
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="mx-auto">
       <Banner />
       <FlashSale />
       <Categories />

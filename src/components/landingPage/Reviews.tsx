@@ -20,32 +20,43 @@ const sliderSettings = {
   autoplay: true,
   speed: 2000,
   autoplaySpeed: 3000,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
 };
 
 export default function ReviewSection() {
   const { data, error, isLoading } = useGetTestimonialsQuery(undefined);
 
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading reviews.</p>;
 
   const reviews = data?.data.slice(0, 10);
-  console.log(reviews);
 
   return (
-    <section className="py-16 ">
-      <h2 className="text-3xl font-bold text-center mb-10 ">
-        Customer Reviews
-      </h2>
-      {reviews.length > 0 ? (
+    <section className="p-4">
+      <h2 className="text-3xl font-bold text-center mb-10">Customer Reviews</h2>
+      {reviews.length > 0 || error ? (
         <Slider {...sliderSettings}>
           {reviews.map((review: any, index: number) => (
             <motion.div
               key={index}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              className="p-2"
             >
               <Card className="hover:scale-105 transition-transform duration-300 ease-in-out">
-                <CardHeader className="flex items-center ">
+                <CardHeader className="flex items-center">
                   <Image
                     alt={`${review.name}'s profile picture`}
                     className="w-16 h-16 rounded-full mr-4"
@@ -59,10 +70,10 @@ export default function ReviewSection() {
                   </div>
                 </CardHeader>
                 <CardBody className="p-4 dark:text-white">
-                  <p className="">{review.comment}</p>
+                  <p>{review.comment}</p>
                 </CardBody>
-                <CardFooter className="bg-primary ">
-                  <p className=" ">{review.user.name}</p>
+                <CardFooter className="bg-primary p-4">
+                  <p>{review.user.name}</p>
                 </CardFooter>
               </Card>
             </motion.div>

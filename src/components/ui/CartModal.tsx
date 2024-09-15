@@ -42,7 +42,7 @@ const CartModal = () => {
         onPress={onOpen}
         className="flex items-center bg-primary text-white hover:bg-secondary"
       >
-        <FaShoppingCart size={20} />{" "}
+        <FaShoppingCart size={15} />{" "}
         <span className="ml-2">{cartItems.length}</span>
       </Button>
 

@@ -54,7 +54,7 @@ export default function CustomerSupport() {
       <div className="flex flex-col justify-center items-center gap-10 lg:flex-row lg:gap-16">
         {/* Support Card */}
         <motion.div
-          className="w-full lg:w-1/2"
+          className="w-3/4 lg:w-1/2"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -67,13 +67,15 @@ export default function CustomerSupport() {
                 We&apos;re here to assist you with any issues, questions, or
                 concerns.
               </p>
-              <Button
-                className="w-full bg-primary dark:bg-[#229799] text-white hover:bg-secondary hover:text-primary transition-all"
-                onPress={() => alert("Connecting to support...")}
-                aria-label="Chat with support"
-              >
-                Chat with Us
-              </Button>
+              <div className="flex items-center justify-center">
+                <Button
+                  className="w-2/4   bg-primary dark:bg-[#229799] text-white hover:bg-secondary hover:text-primary transition-all"
+                  onPress={() => alert("Connecting to support...")}
+                  aria-label="Chat with support"
+                >
+                  Chat with Us
+                </Button>
+              </div>
             </CardBody>
 
             <CardFooter className="flex justify-between">
@@ -119,7 +121,7 @@ export default function CustomerSupport() {
         </motion.div>
 
         {/* FAQ Section */}
-        <div className="w-full lg:w-1/2">
+        <div className="w-3/4 lg:w-1/2">
           <h3 className="text-2xl font-bold text-center mb-8 text-primary dark:text-darkText">
             Frequently Asked Questions
           </h3>
