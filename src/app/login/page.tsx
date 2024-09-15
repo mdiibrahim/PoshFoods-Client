@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { useAppDispatch } from "@/redux/hooks";
-import { setCredentials } from "@/redux/features/authSlice"; // Import setCredentials action
+import { setCredentials } from "@/redux/features/authSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -23,20 +23,25 @@ const Login = () => {
       const response = await login(formData).unwrap();
       dispatch(setCredentials({ token: response.token }));
       toast.success("Login successful!");
-      router.push("/"); // Redirect to home or dashboard
+      router.push("/dashboard");
     } catch (error) {
       toast.error("Login failed. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Login
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-gray-600">
-              Email
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Email Address
             </label>
             <input
               type="email"
@@ -45,11 +50,14 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-gray-600">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-600"
+            >
               Password
             </label>
             <input
@@ -59,12 +67,14 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded"
+            className={`w-full py-3 rounded-lg text-white ${
+              isLoading ? "bg-blue-300" : "bg-primary hover:bg-secondary"
+            } transition-all`}
             disabled={isLoading}
           >
             {isLoading ? "Logging in..." : "Login"}

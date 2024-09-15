@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useSignUpMutation } from "@/redux/api/authApi";
+
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -26,35 +27,109 @@ const SignUp = () => {
       toast.success("Sign-up successful! Please log in.");
       router.push("/login");
     } catch (error) {
-      console.log(error);
       toast.error("Sign-up failed. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {Object.keys(formData).map((key) => (
-            <div key={key}>
-              <label htmlFor={key} className="block text-gray-600">
-                {key.charAt(0).toUpperCase() + key.slice(1)}
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Sign Up
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 gap-4">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Full Name
               </label>
               <input
-                type={key === "password" ? "password" : "text"}
-                id={key}
-                name={key}
-                value={formData[key as keyof typeof formData]}
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full p-2 border rounded"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-          ))}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Phone
+              </label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="address"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Address
+              </label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+          </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded"
+            className={`w-full py-3 rounded-lg text-white ${
+              isLoading ? "bg-blue-300" : "bg-primary hover:bg-secondary"
+            } transition-all`}
             disabled={isLoading}
           >
             {isLoading ? "Signing up..." : "Sign Up"}

@@ -11,12 +11,11 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!role) {
-      router.push("/login"); // Redirect if not logged in
+      router.push("/login");
     }
   }, [role, router]);
 
-  if (!role) return null;
+  if (!role) return <p>Loading...</p>;
 
-  // Render dashboard based on user role
   return role === "admin" ? <AdminDashboard /> : <UserDashboard />;
 }

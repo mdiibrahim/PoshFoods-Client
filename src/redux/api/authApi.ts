@@ -29,7 +29,11 @@ export const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    getUserProfile: builder.query({
+      query: () => ({ url: "/user/profile/", method: "GET" }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignUpMutation } = authApi;
+export const { useLoginMutation, useSignUpMutation, useGetUserProfileQuery } =
+  authApi;
