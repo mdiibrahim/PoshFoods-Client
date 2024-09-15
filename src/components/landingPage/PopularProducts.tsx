@@ -1,58 +1,79 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { motion } from "framer-motion";
 import { useGetProductsQuery } from "@/redux/api/productApi";
-import { useRouter } from "next/navigation"; // Use Next.js router for navigation
+import { useRouter } from "next/navigation";
 
 export default function PopularProducts() {
   const { data, isLoading } = useGetProductsQuery({ isPopular: true });
-  const router = useRouter(); // Initialize router for navigation
+  const router = useRouter();
 
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
   return (
-    <section className="py-16">
-      <div className="flex  justify-between mb-6">
-        <h2 className="text-2xl font-bold text-center mb-4 lg:mb-0 ">
+    <motion.section
+      className="py-16 bg-backgroundColor dark:bg-darkBackground"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="flex justify-between mb-6">
+        <h2 className="text-2xl font-bold text-center text-primary dark:text-darkText">
           Most Popular Products
         </h2>
-        {/* See All Button */}
         <Button
           onClick={() => router.push(`/product?isPopular=true`)}
-          className="w-full lg:w-auto"
+          className="bg-primary text-darkText hover:bg-secondary transition-all"
         >
           See All
         </Button>
       </div>
-      <div className="gap-4 grid grid-cols-2 sm:grid-cols-4">
-        {data.data.map((item) => (
-          <Card
-            shadow="sm"
-            key={item._id}
-            isPressable
-            className="hover:scale-105 transition-transform duration-300 ease-in-out"
-            // Navigate to product details page when pressed
-            onPress={() => router.push(`/product/${item._id}`)}
-          >
-            <CardBody className="p-0 overflow-visible">
-              <Image
+      <motion.div
+        className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, delayChildren: 0.3, staggerChildren: 0.2 }}
+      >
+        {data?.data ? (
+          data?.data.map((item: any) => (
+            <motion.div
+              key={item._id}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Card
                 shadow="sm"
-                radius="lg"
-                width="100%"
-                alt={item.title}
-                className="object-cover w-full h-[140px]"
-                src={item.image}
-              />
-            </CardBody>
-            <CardFooter className="justify-between text-primary px-2 py-4">
-              <span className="font-bold">{item.title}</span>
-              <span className=" text-lg">${item.price}</span>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
-    </section>
+                isPressable
+                className="hover:scale-105 transition-transform duration-300 ease-in-out"
+                onPress={() => router.push(`/product/${item._id}`)}
+              >
+                <CardBody className="p-0">
+                  <Image
+                    shadow="sm"
+                    radius="lg"
+                    width="100%"
+                    alt={item.title}
+                    className="object-cover w-full h-[250px]"
+                    src={item.image}
+                  />
+                </CardBody>
+                <CardFooter className="justify-between text-textColor dark:text-darkText px-2 py-4 bg-primary dark:bg-darkBackground">
+                  <span className="font-bold">{item.title}</span>
+                  <span className="text-lg">${item.price}</span>
+                </CardFooter>
+              </Card>
+            </motion.div>
+          ))
+        ) : (
+          <p className="text-center text-primary dark:text-darkText">
+            No products available...
+          </p>
+        )}
+      </motion.div>
+    </motion.section>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/CartModal.tsx
 "use client";
 
@@ -13,6 +14,7 @@ import {
 import CartDetails from "@/components/ui/CartDetails";
 import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
+import { FaShoppingCart } from "react-icons/fa";
 
 const CartModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -39,7 +41,9 @@ const CartModal = () => {
 
   return (
     <>
-      <Button onPress={onOpen}>Cart ({cartItems.length})</Button>
+      <Button onPress={onOpen}>
+        <FaShoppingCart size={24} /> ({cartItems.length})
+      </Button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>

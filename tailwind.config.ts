@@ -13,6 +13,15 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "#1ABC9C", // Teal
+        secondary: "#2980B9", // Dark Blue
+        backgroundColor: "#e2e8f0",
+        textColor: "#333333", // Dark Gray
+        success: "#27AE60", // Green
+        warning: "#E67E22", // Orange
+        error: "#E74C3C", // Red
+        darkBackground: "#0D1B2A", // Dark mode background
+        darkText: "#FFFFFF", // Dark mode text color
       },
     },
   },

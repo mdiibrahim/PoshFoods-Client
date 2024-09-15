@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/app/product/[productId]/page.tsx
 "use client";
 import { useGetProductByIdQuery } from "@/redux/api/productApi";
