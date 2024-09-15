@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/app/checkout/page.tsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@nextui-org/react";
+import { Button, Spinner, Radio, RadioGroup } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearCart } from "@/redux/features/cartSlice";
@@ -47,7 +47,6 @@ const CheckoutPage = () => {
     }
 
     try {
-      // Ensure totalPrice is being calculated and included for both "Buy Now" and cart checkout flows
       const orderData = orderDetails
         ? {
             products: [
@@ -57,7 +56,7 @@ const CheckoutPage = () => {
                 price: orderDetails.price,
               },
             ],
-            totalPrice: buyNowGrandTotal, // Make sure totalPrice is included
+            totalPrice: buyNowGrandTotal,
           }
         : {
             products: orderSummary.cartItems.map((item: any) => ({
@@ -65,10 +64,8 @@ const CheckoutPage = () => {
               quantity: item.quantity,
               price: item.price,
             })),
-            totalPrice: grandTotal, // Make sure totalPrice is included for cart
+            totalPrice: grandTotal,
           };
-
-      console.log("Order Data:", orderData);
 
       await createOrder(orderData).unwrap();
 
@@ -82,22 +79,27 @@ const CheckoutPage = () => {
       toast.success("Order created successfully!");
       router.push("/dashboard");
     } catch (error) {
-      localStorage.removeItem("orderDetails");
       console.error("Order creation error:", error);
       toast.error("Failed to place order. Please try again.");
     }
   };
 
-  if (!orderSummary && !orderDetails) return <p>Loading...</p>;
+  if (!orderSummary && !orderDetails) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner label="Loading checkout details..." />
+      </div>
+    );
+  }
 
-  // Calculate tax and grand total for Buy Now flow (orderDetails)
+  // Calculate totals for "Buy Now" flow (orderDetails)
   const buyNowSubTotal = orderDetails
     ? orderDetails.price * orderDetails.quantity
     : 0;
   const buyNowTax = buyNowSubTotal * taxRate;
   const buyNowGrandTotal = buyNowSubTotal + buyNowTax + deliveryFee;
 
-  // If cart checkout, we use the orderSummary's values
+  // Cart checkout values
   const {
     cartItems,
     totalPrice,
@@ -107,46 +109,134 @@ const CheckoutPage = () => {
   } = orderSummary || {};
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-      <div className="order-summary">
-        <h3 className="text-xl font-semibold">Order Summary</h3>
+    <div className="container mx-auto p-6 dark:text-darkText dark:bg-darkBackground">
+      <h2 className="text-3xl font-bold mb-6 text-center">Checkout</h2>
 
-        {orderDetails ? (
-          // Show order details from "Buy Now" flow
-          <div>
-            <ul className="mb-4">
-              <li>
-                Product ID: {orderDetails.productId} - Quantity:{" "}
-                {orderDetails.quantity} - Price: ${orderDetails.price}
-              </li>
-            </ul>
-            <p>Subtotal: ${buyNowSubTotal.toFixed(2)}</p>
-            <p>Tax: ${buyNowTax.toFixed(2)}</p>
-            <p>Delivery Fee: ${deliveryFee}</p>
-            <p>Grand Total: ${buyNowGrandTotal.toFixed(2)}</p>
+      <div className="flex flex-col lg:flex-row lg:justify-between gap-10">
+        {/* Order Summary Section */}
+        <div className="w-full lg:w-1/2  shadow-lg rounded-lg p-8">
+          <h3 className="text-2xl font-semibold mb-6 text-primary">
+            Order Summary
+          </h3>
+
+          {orderDetails ? (
+            <div className="space-y-4 text-lg">
+              <div>
+                <span className="font-semibold">Product ID:</span>{" "}
+                {orderDetails.productId}
+              </div>
+              <div>
+                <span className="font-semibold">Quantity:</span>{" "}
+                {orderDetails.quantity}
+              </div>
+              <div>
+                <span className="font-semibold">Price:</span> $
+                {orderDetails.price}
+              </div>
+              <div className="mt-6 space-y-2">
+                <p className="text-base">
+                  Subtotal:{" "}
+                  <span className="font-bold">
+                    ${buyNowSubTotal.toFixed(2)}
+                  </span>
+                </p>
+                <p className="text-base">
+                  Tax:{" "}
+                  <span className="font-bold">${buyNowTax.toFixed(2)}</span>
+                </p>
+                <p className="text-base">
+                  Delivery Fee:{" "}
+                  <span className="font-bold">${deliveryFee}</span>
+                </p>
+                <p className="text-xl font-bold text-green-600">
+                  Grand Total: ${buyNowGrandTotal.toFixed(2)}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-4 text-lg">
+              <ul className="space-y-2">
+                {cartItems.map((item: any) => (
+                  <li key={item._id} className="flex justify-between">
+                    <span>{item.title}</span>
+                    <span>
+                      {item.quantity} x{" "}
+                      <span className="font-bold">${item.price}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 space-y-2">
+                <p className="text-base">
+                  Total Price:{" "}
+                  <span className="font-bold">${totalPrice.toFixed(2)}</span>
+                </p>
+                <p className="text-base">
+                  Tax: <span className="font-bold">${tax.toFixed(2)}</span>
+                </p>
+                <p className="text-base">
+                  Delivery Fee:{" "}
+                  <span className="font-bold">${cartDeliveryFee}</span>
+                </p>
+                <p className="text-xl font-bold text-green-600">
+                  Grand Total: ${grandTotal.toFixed(2)}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Place Order Section */}
+        <div className="w-full lg:w-1/2  shadow-lg rounded-lg p-6 flex flex-col justify-between">
+          <div className="mb-6">
+            <p className="text-lg font-semibold">
+              Your order has been confirmed! Expect delivery within 3-7 days, In
+              sha Allah.
+              <br />
+              Please ensure the following before receiving your parcel:
+              <ul className="list-disc list-inside mt-2">
+                <li>The size is correct</li>
+                <li>The color matches</li>
+                <li>There are no damages</li>
+              </ul>
+              If there is an issue, return it to the delivery person
+              immediately. Once they leave, no complaints can be entertained.
+              <br />
+              <br />
+              We strive to provide you with the best service possible.
+            </p>
+
+            {/* Cash on Delivery Radio Button */}
+            <div className="mt-4">
+              <p className="font-semibold mb-2">Payment Method</p>
+              <RadioGroup
+                defaultValue="cod"
+                aria-label="Payment method"
+                isDisabled
+              >
+                <Radio value="cod" className="dark:text-darkText">
+                  Cash on Delivery
+                </Radio>
+              </RadioGroup>
+            </div>
           </div>
-        ) : (
-          // Show cart summary for cart checkout flow
-          <div>
-            <ul className="mb-4">
-              {cartItems.map((item: any) => (
-                <li key={item._id}>
-                  {item.title} - {item.quantity} x ${item.price}
-                </li>
-              ))}
-            </ul>
-            <p>Total Price: ${totalPrice.toFixed(2)}</p>
-            <p>Tax: ${tax.toFixed(2)}</p>
-            <p>Delivery Fee: ${cartDeliveryFee}</p>
-            <p>Grand Total: ${grandTotal.toFixed(2)}</p>
-          </div>
-        )}
+
+          <Button
+            color="primary"
+            onPress={handlePlaceOrder}
+            isLoading={isLoading}
+            className="mb-4 w-full bg-primary text-white hover:bg-secondary"
+          >
+            Place Order
+          </Button>
+          <Button
+            onPress={() => router.push("/cart")}
+            className="w-full bg-gray-100 text-gray-700 hover:bg-gray-200"
+          >
+            Continue Shopping
+          </Button>
+        </div>
       </div>
-
-      <Button color="primary" onPress={handlePlaceOrder} isLoading={isLoading}>
-        Place Order
-      </Button>
     </div>
   );
 };

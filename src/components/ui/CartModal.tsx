@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/components/CartModal.tsx
 "use client";
 
 import {
@@ -25,7 +24,6 @@ const CartModal = () => {
   const router = useRouter();
 
   const handleProceedToCheckout = () => {
-    // Save order summary to localStorage
     const orderSummary = {
       cartItems,
       totalPrice,
@@ -35,28 +33,38 @@ const CartModal = () => {
     };
     localStorage.setItem("orderSummary", JSON.stringify(orderSummary));
     onOpenChange();
-    // Redirect to the checkout page
     router.push("/checkout");
   };
 
   return (
     <>
-      <Button onPress={onOpen}>
-        <FaShoppingCart size={24} /> ({cartItems.length})
+      <Button
+        onPress={onOpen}
+        className="flex items-center bg-primary text-white hover:bg-secondary"
+      >
+        <FaShoppingCart size={20} />{" "}
+        <span className="ml-2">{cartItems.length}</span>
       </Button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {() => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 text-xl font-semibold">
                 Your Cart
               </ModalHeader>
               <ModalBody>
                 {cartItems.length > 0 ? (
-                  cartItems.map((product: any) => (
-                    <CartDetails key={product._id} product={product} />
-                  ))
+                  <div className="space-y-4">
+                    {cartItems.map((product: any) => (
+                      <CartDetails key={product._id} product={product} />
+                    ))}
+                    <div className="mt-6 text-right">
+                      <p>Total Price: ${totalPrice.toFixed(2)}</p>
+                      <p>Tax: ${tax.toFixed(2)}</p>
+                      <p>Grand Total: ${grandTotal.toFixed(2)}</p>
+                    </div>
+                  </div>
                 ) : (
                   <p>Your cart is empty.</p>
                 )}
@@ -66,9 +74,12 @@ const CartModal = () => {
                   <Button
                     onPress={handleProceedToCheckout}
                     isDisabled={cartItems.length === 0}
-                    className="bg-primary"
+                    className="bg-primary text-white hover:bg-secondary"
                   >
                     Proceed to Checkout
+                  </Button>
+                  <Button onPress={onOpenChange} className="text-secondary">
+                    Continue Shopping
                   </Button>
                 </div>
               </ModalFooter>

@@ -16,7 +16,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <div className="min-h-screen flex flex-col">
+      <div className="flex flex-col">
         {/* Ensure the header stretches across the entire width */}
         <header className="w-full">
           <Header />
@@ -37,7 +37,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
         />
 
         {/* Main content, flex-grow makes sure it takes available space */}
-        <main className="flex-grow container mx-auto px-4  text-textColor dark:bg-darkBackground dark:text-darkText">
+        <main className="flex-grow container mx-auto px-4 min-h-screen  text-textColor dark:bg-darkBackground dark:text-darkText">
           {children}
         </main>
 
