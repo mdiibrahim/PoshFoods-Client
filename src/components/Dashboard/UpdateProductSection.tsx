@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState, useEffect } from "react";
 import {
@@ -129,9 +130,37 @@ const ProductModal: React.FC<ProductModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onClose} placement="center">
-      <ModalContent>
-        <ModalHeader>Update Product</ModalHeader>
+    <Modal
+      isOpen={isOpen}
+      isDismissable={false}
+      onOpenChange={onClose}
+      placement="center"
+      scrollBehavior="inside"
+      motionProps={{
+        variants: {
+          enter: {
+            y: 0,
+            opacity: 1,
+            transition: {
+              duration: 0.3,
+              ease: "easeOut",
+            },
+          },
+          exit: {
+            y: -20,
+            opacity: 0,
+            transition: {
+              duration: 0.2,
+              ease: "easeIn",
+            },
+          },
+        },
+      }}
+    >
+      <ModalContent className="max-h-[80vh] overflow-auto">
+        <ModalHeader className="text-lg font-semibold">
+          Update Product
+        </ModalHeader>
         <ModalBody>
           <Input
             label="Product Title"
@@ -174,8 +203,9 @@ const ProductModal: React.FC<ProductModalProps> = ({
             onChange={handleInputChange}
             required
           />
+
           <div>
-            <label>Additional Images</label>
+            <label className="font-medium">Additional Images</label>
             {productState.additionalImages.map((image, index) => (
               <Input
                 key={index}
@@ -186,10 +216,17 @@ const ProductModal: React.FC<ProductModalProps> = ({
                 }
               />
             ))}
-            <Button onPress={addAdditionalImageField}>Add Image</Button>
+            <Button
+              onPress={addAdditionalImageField}
+              size="sm"
+              className="mt-2"
+            >
+              Add Image
+            </Button>
           </div>
-          <div>
-            <label>Features</label>
+
+          <div className="mt-4">
+            <label className="font-medium">Features</label>
             {productState.features.map((feature, index) => (
               <Input
                 key={index}
@@ -198,21 +235,24 @@ const ProductModal: React.FC<ProductModalProps> = ({
                 onChange={(e) => handleFeaturesChange(index, e.target.value)}
               />
             ))}
-            <Button onPress={addFeatureField}>Add Feature</Button>
+            <Button onPress={addFeatureField} size="sm" className="mt-2">
+              Add Feature
+            </Button>
           </div>
 
+          {/* Select Components */}
           <Select
             label="In Stock"
             placeholder="Select stock status"
             selectedKeys={productState.inStock ? ["true"] : ["false"]}
             onSelectionChange={(selected) => {
-              const selectedValue = Array.from(selected).join(""); // Convert selection to a string
+              const selectedValue = Array.from(selected).join("");
               setProductState({
                 ...productState,
                 inStock: selectedValue === "true",
               });
             }}
-            className="max-w-xs"
+            className="max-w-xs mt-4"
           >
             <SelectItem key="true" value="true">
               True
@@ -227,13 +267,13 @@ const ProductModal: React.FC<ProductModalProps> = ({
             placeholder="Select status"
             selectedKeys={productState.isPopular ? ["true"] : ["false"]}
             onSelectionChange={(selected) => {
-              const selectedValue = Array.from(selected).join(""); // Convert selection to a string
+              const selectedValue = Array.from(selected).join("");
               setProductState({
                 ...productState,
                 isPopular: selectedValue === "true",
               });
             }}
-            className="max-w-xs"
+            className="max-w-xs mt-4"
           >
             <SelectItem key="true" value="true">
               True
@@ -248,13 +288,13 @@ const ProductModal: React.FC<ProductModalProps> = ({
             placeholder="Select sale status"
             selectedKeys={productState.isFlashSale ? ["true"] : ["false"]}
             onSelectionChange={(selected) => {
-              const selectedValue = Array.from(selected).join(""); // Convert selection to a string
+              const selectedValue = Array.from(selected).join("");
               setProductState({
                 ...productState,
                 isFlashSale: selectedValue === "true",
               });
             }}
-            className="max-w-xs"
+            className="max-w-xs mt-4"
           >
             <SelectItem key="true" value="true">
               True
@@ -270,13 +310,13 @@ const ProductModal: React.FC<ProductModalProps> = ({
             placeholder="Select category"
             selectedKeys={[productState.category]}
             onSelectionChange={(selected) => {
-              const selectedValue = Array.from(selected).join(""); // Convert selection to a string
+              const selectedValue = Array.from(selected).join("");
               setProductState({
                 ...productState,
                 category: selectedValue,
               });
             }}
-            className="max-w-xs"
+            className="max-w-xs mt-4"
           >
             {CATEGORIES.map((category) => (
               <SelectItem key={category} value={category}>

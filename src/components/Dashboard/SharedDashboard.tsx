@@ -18,7 +18,7 @@ export default function SharedDashboard({ sections }: LayoutProps) {
     <div className="min-h-screen flex flex-col lg:flex-row">
       <Sidebar setActiveSection={setActiveSection} options={makeSections} />
       <main className="flex-1 p-6 lg:p-8 bg-gradient-to-r from-green-50 to-blue-100 w-full">
-        <div className="bg-white shadow-md rounded-lg p-6">
+        <div className="bg-white dark:bg-darkBackground shadow-md rounded-lg p-6">
           {sections[activeSection]}
         </div>
       </main>

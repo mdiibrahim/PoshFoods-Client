@@ -29,7 +29,7 @@ export default function Sidebar({ setActiveSection, options }: SidebarProps) {
       <aside
         className={`${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 fixed lg:relative lg:w-64 bg-primary p-4 top-40 lg:top-0 z-40 lg:z-auto left-0 w-2/4 text-white min-h-screen shadow-lg transform transition-transform duration-300 ease-in-out`}
+        } lg:translate-x-0 fixed lg:relative lg:w-64 bg-primary p-4 top-40 lg:top-0 z-40 dark:bg-darkBackground lg:z-auto left-0 w-2/4 text-white min-h-screen shadow-lg transform transition-transform duration-300 ease-in-out`}
       >
         <h2 className="text-3xl font-extrabold mb-8">Dashboard</h2>
         <nav>
