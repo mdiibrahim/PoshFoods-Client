@@ -109,6 +109,7 @@ export default function FlashSale() {
             >
               <Card
                 shadow="sm"
+                isPressable
                 className="hover:scale-105 transition-transform duration-300 ease-in-out"
                 onPress={() => router.push(`/product/${item._id}`)}
               >
