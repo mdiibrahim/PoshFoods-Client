@@ -38,7 +38,6 @@ const authSlice = createSlice({
         // Save token to cookies
         Cookies.set("token", token);
       } catch (error) {
-        console.error("Invalid token:", error);
         state.isAuthenticated = false;
       }
     },
@@ -59,7 +58,6 @@ const authSlice = createSlice({
           state.role = decoded.role;
           state.isAuthenticated = true;
         } catch (error) {
-          console.error("Failed to decode token:", error);
           state.isAuthenticated = false;
         }
       }

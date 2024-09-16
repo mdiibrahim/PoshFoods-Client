@@ -125,7 +125,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
       onClose(); // Close the modal after updating
     } catch (error) {
       toast.error("Failed to update product. Please try again.");
-      console.error("Error updating product:", error);
     }
   };
 

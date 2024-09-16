@@ -79,7 +79,6 @@ const CheckoutPage = () => {
       toast.success("Order created successfully!");
       router.push("/dashboard");
     } catch (error) {
-      console.error("Order creation error:", error);
       toast.error("Failed to place order. Please try again.");
     }
   };

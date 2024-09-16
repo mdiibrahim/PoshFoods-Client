@@ -102,7 +102,6 @@ const AddProductSection: React.FC = () => {
       });
     } catch (error) {
       toast.error("Failed to add product. Please try again.");
-      console.error("Error creating product:", error);
     }
   };
 

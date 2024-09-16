@@ -162,44 +162,45 @@ export default function Products() {
 
       {/* Product List */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full p-4">
-        {data.data.map((product: any) => (
-          <Card
-            key={product._id}
-            isFooterBlurred
-            className="h-[350px] col-span-1 hover:shadow-lg transition-transform transform hover:scale-105"
-          >
-            <CardHeader className="absolute z-10 top-1 flex-col items-start bg-opacity-60">
-              <p className="text-sm text-black uppercase font-bold">
-                {product.category}
-              </p>
-            </CardHeader>
-            <Image
-              removeWrapper
-              alt={product.title}
-              className="z-0 w-full h-full object-cover opacity-40"
-              src={
-                product.image.startsWith("http")
-                  ? product.image
-                  : `/images/${product.image}`
-              }
-            />
-            <CardFooter className="absolute bg-black/50 bottom-0 z-10 flex justify-between items-center w-full p-2 border-t border-gray-600">
-              <div className="flex flex-col">
-                <p className="text-sm text-white">{product.title}</p>
-                <p className="text-sm text-white">${product.price}</p>
-              </div>
-              <Link href={`/product/${product._id}`}>
-                <Button
-                  radius="full"
-                  size="sm"
-                  className="bg-primary hover:bg-secondary text-white"
-                >
-                  View Details
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
-        ))}
+        {data?.data &&
+          data?.data?.map((product: any) => (
+            <Card
+              key={product._id}
+              isFooterBlurred
+              className="h-[350px] col-span-1 hover:shadow-lg transition-transform transform hover:scale-105"
+            >
+              <CardHeader className="absolute z-10 top-1 flex-col items-start bg-opacity-60">
+                <p className=" bg-black bg-opacity-70 text-white  text-sm rounded-md  uppercase font-bold">
+                  {product.category}
+                </p>
+              </CardHeader>
+              <Image
+                removeWrapper
+                alt={product.title}
+                className="z-0 w-full h-full object-cover opacity-40"
+                src={
+                  product.image.startsWith("http")
+                    ? product.image
+                    : `/images/${product.image}`
+                }
+              />
+              <CardFooter className="absolute bg-black/50 bottom-0 z-10 flex justify-between items-center w-full p-2 border-t border-gray-600">
+                <div className="flex flex-col">
+                  <p className="text-sm text-white">{product.title}</p>
+                  <p className="text-sm text-white">${product.price}</p>
+                </div>
+                <Link href={`/product/${product._id}`}>
+                  <Button
+                    radius="full"
+                    size="sm"
+                    className="bg-primary hover:bg-secondary text-white"
+                  >
+                    View Details
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          ))}
       </div>
 
       {/* Pagination */}
