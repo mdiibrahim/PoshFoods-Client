@@ -30,7 +30,7 @@ export default function Loading() {
       animate="visible"
     >
       <motion.div variants={item}>
-        <Spinner label="Loading..." color="success" size="lg" />
+        <Spinner label="Just a seconds Cheif...." color="success" size="lg" />
       </motion.div>
     </motion.div>
   );

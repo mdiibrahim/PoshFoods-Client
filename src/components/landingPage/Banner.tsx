@@ -20,8 +20,9 @@ const Banner = () => {
           alt="Full-Screen Banner Image"
           layout="fill"
           objectPosition="center"
+          objectFit="cover"
           priority
-          className="bg-black opacity-30"
+          className=" opacity-35 bg-black"
         />
       </div>
 
