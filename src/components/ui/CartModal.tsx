@@ -54,7 +54,7 @@ const CartModal = () => {
                 Your Cart
               </ModalHeader>
               <ModalBody>
-                {cartItems.length > 0 ? (
+                {cartItems && cartItems.length > 0 ? (
                   <div className="space-y-4">
                     {cartItems.map((product: any) => (
                       <CartDetails key={product._id} product={product} />

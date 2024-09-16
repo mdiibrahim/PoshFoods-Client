@@ -1,5 +1,11 @@
 import { ReactNode } from "react";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Admin Dashboard - PoshFoods",
+  description:
+    "Manage products, orders, users, and more in the Admin Dashboard of PoshFoods.",
+};
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-gray-100">

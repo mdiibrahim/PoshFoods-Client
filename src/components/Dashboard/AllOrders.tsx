@@ -86,43 +86,44 @@ const AdminOrderManagement: React.FC = () => {
           <TableColumn>STATUS</TableColumn>
         </TableHeader>
         <TableBody>
-          {paginatedOrders.map((order: any) => (
-            <TableRow key={order._id}>
-              <TableCell>
-                <div>
-                  <p>{order.user.name}</p>
-                  <p>{order.user.email}</p>
-                  <p>{order.user.phone}</p>
-                </div>
-              </TableCell>
-              <TableCell>
-                <ul>
-                  {order.products.map((product: any, index: number) => (
-                    <li key={index}>
-                      <strong>{product.productId.title}</strong>
-                      <p>
-                        {product.quantity} x ${product.price}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </TableCell>
-              <TableCell>${order.totalPrice.toFixed(2)}</TableCell>
-              <TableCell>
-                {order.isOrdered === "pending" ? (
-                  <Button
-                    color="success"
-                    className="bg-primary hover:bg-secondary"
-                    onPress={() => handleStatusChange(order._id, "delivered")}
-                  >
-                    Mark as Delivered
-                  </Button>
-                ) : (
-                  <p className="text-green-600">Done</p>
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
+          {paginatedOrders &&
+            paginatedOrders.map((order: any) => (
+              <TableRow key={order._id}>
+                <TableCell>
+                  <div>
+                    <p>{order.user.name}</p>
+                    <p>{order.user.email}</p>
+                    <p>{order.user.phone}</p>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <ul>
+                    {order.products.map((product: any, index: number) => (
+                      <li key={index}>
+                        <strong>{product.productId.title}</strong>
+                        <p>
+                          {product.quantity} x ${product.price}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </TableCell>
+                <TableCell>${order.totalPrice.toFixed(2)}</TableCell>
+                <TableCell>
+                  {order.isOrdered === "pending" ? (
+                    <Button
+                      color="success"
+                      className="bg-primary hover:bg-secondary"
+                      onPress={() => handleStatusChange(order._id, "delivered")}
+                    >
+                      Mark as Delivered
+                    </Button>
+                  ) : (
+                    <p className="text-green-600">Done</p>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
 

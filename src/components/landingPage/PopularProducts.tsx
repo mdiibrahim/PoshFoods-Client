@@ -32,14 +32,18 @@ export default function PopularProducts() {
           See All
         </Button>
       </div>
-      <motion.div
-        className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, delayChildren: 0.3, staggerChildren: 0.2 }}
-      >
-        {data?.data ? (
-          data?.data.map((item: any) => (
+      {data?.data && data?.data?.length > 0 ? (
+        <motion.div
+          className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.6,
+            delayChildren: 0.3,
+            staggerChildren: 0.2,
+          }}
+        >
+          {data?.data.map((item: any) => (
             <motion.div
               key={item._id}
               whileHover={{ scale: 1.05 }}
@@ -67,13 +71,15 @@ export default function PopularProducts() {
                 </CardFooter>
               </Card>
             </motion.div>
-          ))
-        ) : (
-          <p className="text-center text-primary dark:text-darkText">
+          ))}
+        </motion.div>
+      ) : (
+        <div className="flex items-center justify-center h-52">
+          <p className="text-xl font-semibold text-primary dark:text-white">
             No products available...
           </p>
-        )}
-      </motion.div>
+        </div>
+      )}
     </motion.section>
   );
 }

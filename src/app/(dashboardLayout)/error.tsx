@@ -1,6 +1,6 @@
-"use client";
+"use client"; // Error boundaries must be Client Components
 
-export default function GlobalError({
+export default function Error({
   error,
   reset,
 }: {

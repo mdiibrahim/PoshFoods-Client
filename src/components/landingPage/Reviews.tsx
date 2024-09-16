@@ -37,7 +37,7 @@ const sliderSettings = {
 };
 
 export default function ReviewSection() {
-  const { data, error, isLoading } = useGetTestimonialsQuery(undefined);
+  const { data, isLoading } = useGetTestimonialsQuery(undefined);
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -46,7 +46,7 @@ export default function ReviewSection() {
   return (
     <section className="p-4">
       <h2 className="text-3xl font-bold text-center mb-10">Customer Reviews</h2>
-      {reviews.length > 0 || error ? (
+      {reviews && reviews.length > 0 ? (
         <Slider {...sliderSettings}>
           {reviews.map((review: any, index: number) => (
             <motion.div

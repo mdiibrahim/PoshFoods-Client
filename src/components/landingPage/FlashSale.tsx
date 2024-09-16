@@ -99,7 +99,7 @@ export default function FlashSale() {
         </Button>
       </div>
 
-      {itemsToShow ? (
+      {itemsToShow && itemsToShow ? (
         <Slider {...settings}>
           {itemsToShow.map((item: any, index: number) => (
             <motion.div

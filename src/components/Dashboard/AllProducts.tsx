@@ -136,45 +136,46 @@ const ProductsSection: React.FC = () => {
 
       {/* Product List */}
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.data.map((product: any) => (
-          <li
-            key={product._id}
-            className="bg-backgroundColor p-6 shadow-lg rounded-lg"
-          >
-            <div className="flex flex-col justify-between h-full ">
-              <div className="mb-4">
-                <h4 className="font-bold dark:text-black  text-lg mb-2">
-                  {product.title}
-                </h4>
-                <p className="text-gray-500 mb-2">{product.category}</p>
-                <p className="text-gray-700 font-semibold mb-2">
-                  ${product.price}
-                </p>
-                <Image
-                  src={product.image}
-                  alt={product.title}
-                  width={50}
-                  height={50}
-                  className="object-cover mb-4 rounded-md"
-                />
+        {data?.data &&
+          data?.data.map((product: any) => (
+            <li
+              key={product._id}
+              className="bg-backgroundColor p-6 shadow-lg rounded-lg"
+            >
+              <div className="flex flex-col justify-between h-full ">
+                <div className="mb-4">
+                  <h4 className="font-bold dark:text-black  text-lg mb-2">
+                    {product.title}
+                  </h4>
+                  <p className="text-gray-500 mb-2">{product.category}</p>
+                  <p className="text-gray-700 font-semibold mb-2">
+                    ${product.price}
+                  </p>
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    width={50}
+                    height={50}
+                    className="object-cover mb-4 rounded-md"
+                  />
+                </div>
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => setSelectedProduct(product)}
+                    className="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteProduct(product._id)}
+                    className="flex-1 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
-              <div className="flex space-x-4">
-                <button
-                  onClick={() => setSelectedProduct(product)}
-                  className="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteProduct(product._id)}
-                  className="flex-1 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          ))}
       </ul>
 
       {/* Pagination */}

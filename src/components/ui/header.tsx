@@ -146,14 +146,14 @@ export default function MergedNavbar() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="rounded-lg border border-gray-300 px-4 py-2 text-textColor dark:text-gray-300"
             />
-            <Button type="submit" className="absolute right-2 top-0 mr-0">
+            <Button type="submit" className="absolute right-2 top-0 -mr-2">
               <FaSearch />
             </Button>
           </form>
         </NavbarContent>
 
         {/* Right side: Cart, Theme Switcher, Profile */}
-        <div className="hidden lg:flex items-end justify-end space-x-2 pr-4">
+        <div className="hidden lg:flex items-end justify-end space-x-2 ">
           <Badge content={totalUniqueProducts} color="secondary">
             <CartModal />
           </Badge>
@@ -184,6 +184,7 @@ export default function MergedNavbar() {
                       key="logout"
                       color="danger"
                       onClick={handleLogout}
+                      className="bg-primary text-white hover:bg-secondary"
                     >
                       Log Out
                     </DropdownItem>
@@ -195,7 +196,7 @@ export default function MergedNavbar() {
                     <Button
                       as="a"
                       href="/login"
-                      className="bg-primary hover:bg-secondary"
+                      className="bg-primary text-white hover:bg-secondary"
                       variant="flat"
                       size="sm"
                     >
@@ -206,7 +207,7 @@ export default function MergedNavbar() {
                     <Button
                       as="a"
                       href="/signup"
-                      className="bg-primary hover:bg-secondary"
+                      className="bg-primary text-white hover:bg-secondary"
                       variant="flat"
                       size="sm"
                     >
@@ -221,7 +222,6 @@ export default function MergedNavbar() {
       </div>
 
       {/* Mobile and Tablet Menu */}
-      {/* Mobile and Tablet Menu */}
       {isMobileMenuOpen && (
         <div
           className="lg:hidden absolute top-full left-0 w-full bg-backgroundColor
@@ -230,7 +230,11 @@ export default function MergedNavbar() {
           {/* Categories */}
           <Dropdown>
             <DropdownTrigger>
-              <Button disableRipple className="p-0 bg-transparent" radius="sm">
+              <Button
+                disableRipple
+                className="p-0 text-lg bg-transparent"
+                radius="sm"
+              >
                 Categories
               </Button>
             </DropdownTrigger>
@@ -262,7 +266,7 @@ export default function MergedNavbar() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-lg border border-gray-300 px-4 py-2 text-textColor dark:text-gray-300"
             />
-            <Button type="submit" className="absolute right-2 top-0">
+            <Button type="submit" className="absolute right-2 top-0 -mr-2">
               <FaSearch />
             </Button>
           </form>
@@ -279,26 +283,28 @@ export default function MergedNavbar() {
           {!isLoading && (
             <>
               {token && userData ? (
-                <div className="mt-4">
+                <div className="mt-4 ">
                   <p className="font-semibold">Signed in as {userName}</p>
-                  <Link href="/dashboard">
-                    <Button className="bg-primary hover:bg-secondary w-full">
-                      My Dashboard
+                  <div className="flex items-center justify-center mt-4">
+                    <Link href="/dashboard">
+                      <Button className="bg-primary text-white hover:bg-secondary w-full">
+                        My Dashboard
+                      </Button>
+                    </Link>
+                    <Button
+                      onClick={handleLogout}
+                      className="ml-4 w-full bg-primary text-white hover:bg-secondary"
+                    >
+                      Log Out
                     </Button>
-                  </Link>
-                  <Button
-                    onClick={handleLogout}
-                    className="mt-2 w-full bg-primary hover:bg-secondary"
-                  >
-                    Log Out
-                  </Button>
+                  </div>
                 </div>
               ) : (
                 <div className="flex flex-col space-y-4 w-full mt-4">
                   <Button
                     as="a"
                     href="/login"
-                    className="bg-primary hover:bg-secondary w-full"
+                    className="bg-primary text-white hover:bg-secondary w-full"
                     variant="flat"
                     size="sm"
                   >
@@ -307,7 +313,7 @@ export default function MergedNavbar() {
                   <Button
                     as="a"
                     href="/signup"
-                    className="bg-primary hover:bg-secondary w-full"
+                    className="bg-primary text-white hover:bg-secondary w-full"
                     variant="flat"
                     size="sm"
                   >
