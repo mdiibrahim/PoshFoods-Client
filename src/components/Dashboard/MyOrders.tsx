@@ -176,7 +176,7 @@ const UserOrders = () => {
                     <span className="mr-3 text-lg font-semibold">Rating:</span>
                     {[1, 2, 3, 4, 5].map((star) => (
                       <FaStar
-                        key={star}
+                        key={product.productId._id}
                         onClick={() =>
                           !isReviewed &&
                           handleRatingChange(product.productId._id, star)

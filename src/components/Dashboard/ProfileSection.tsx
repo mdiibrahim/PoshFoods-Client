@@ -1,10 +1,12 @@
 "use client";
-import React from "react";
-import { useGetUserProfileQuery } from "@/redux/api/authApi"; // Import the user profile query
-import { Spinner } from "@nextui-org/react"; // Spinner for loading state
+import React, { useState } from "react";
+import { useGetUserProfileQuery } from "@/redux/api/authApi";
+import { Spinner, Button } from "@nextui-org/react";
+import UpdateProfileModal from "./UpdateProfileModal"; // Import UpdateProfileModal
 
 const ProfileSection: React.FC = () => {
-  const { data, isLoading, error } = useGetUserProfileQuery(undefined); // Fetch user data
+  const { data, isLoading, error } = useGetUserProfileQuery(undefined);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
   if (isLoading) {
     return (
@@ -28,7 +30,7 @@ const ProfileSection: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-4xl font-bold  text-primary mb-6">Profile</h2>
+      <h2 className="text-4xl font-bold text-primary mb-6">Profile</h2>
       <div className="bg-white shadow dark:bg-darkBackground rounded-lg p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <p className="text-lg">
@@ -44,7 +46,21 @@ const ProfileSection: React.FC = () => {
             <strong>Address:</strong> {userData?.address || "N/A"}
           </p>
         </div>
+        <div className="mt-4">
+          <Button
+            onPress={() => setIsModalOpen(true)}
+            className="bg-primary text-white hover:bg-secondary"
+          >
+            Edit Profile
+          </Button>
+        </div>
       </div>
+
+      {/* Modal for updating profile */}
+      <UpdateProfileModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };

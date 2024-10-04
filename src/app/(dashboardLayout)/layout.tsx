@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard - PoshFoods",
+  title: "Dashboard - PoshFoods",
   description:
     "Manage products, orders, users, and more in the Admin Dashboard of PoshFoods.",
 };
