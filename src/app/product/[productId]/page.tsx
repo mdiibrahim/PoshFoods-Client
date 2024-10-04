@@ -147,6 +147,9 @@ const ProductDetails = () => {
           <p className="text-gray-600 dark:text-gray-300 mb-6">
             {product.description}
           </p>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            {product.quantity}
+          </p>
 
           {/* Quantity Selector */}
           <div className="flex items-center gap-4 mb-6">

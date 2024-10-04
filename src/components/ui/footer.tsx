@@ -8,7 +8,7 @@ import logo from "@/assests/logo.webp";
 const Footer = () => {
   return (
     <motion.footer
-      className="bg-backgroundColor text-textColor py-10 dark:bg-darkBackground dark:text-darkText"
+      className="bg-backgroundColor border-t-1 border-textColor text-textColor py-10 dark:bg-darkBackground dark:text-darkText"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -26,17 +26,26 @@ const Footer = () => {
           <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
           <ul className="text-sm space-y-2 text-textColor dark:text-darkText">
             <li>
-              <Link href="#" className="hover:text-primary transition-colors">
+              <Link
+                href="/product"
+                className="hover:text-primary transition-colors"
+              >
                 Shop All Products
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-primary transition-colors">
+              <Link
+                href="/contact-us"
+                className="hover:text-primary transition-colors"
+              >
                 Contact Us
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-primary transition-colors">
+              <Link
+                href="/return-policy"
+                className="hover:text-primary transition-colors"
+              >
                 Return Policy
               </Link>
             </li>

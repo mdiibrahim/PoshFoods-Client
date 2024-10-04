@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body
-        className={`bg-light text-black dark:bg-dark ${merriweather.className} dark:text-white`}
+        className={`bg-light text-black  dark:bg-darkBackground ${merriweather.className} dark:text-white`}
       >
         <UIProvider>
           <div className="">{children}</div>
