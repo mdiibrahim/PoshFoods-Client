@@ -14,6 +14,7 @@ import CartDetails from "@/components/ui/CartDetails";
 import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { FaShoppingCart } from "react-icons/fa";
+import { useEffect } from "react";
 
 const CartModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -24,12 +25,21 @@ const CartModal = () => {
   const { role } = useAppSelector((state) => state.auth); // Get the user's role
   const router = useRouter();
 
-  // If the role is admin, set cartItems to empty and reset totals
+  // Check if the user is an admin
   const isAdmin = role === "admin";
+
+  // If the role is admin, set cartItems to empty and reset totals
   const adjustedCartItems = isAdmin ? [] : cartItems;
   const adjustedTotalPrice = isAdmin ? 0 : totalPrice;
   const adjustedTax = isAdmin ? 0 : tax;
   const adjustedGrandTotal = isAdmin ? 0 : grandTotal;
+
+  // Remove cart items from localStorage if the role is admin
+  useEffect(() => {
+    if (isAdmin) {
+      localStorage.removeItem("orderSummary");
+    }
+  }, [isAdmin]);
 
   const handleProceedToCheckout = () => {
     const orderSummary = {
