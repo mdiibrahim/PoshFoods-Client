@@ -159,9 +159,8 @@ export default function MergedNavbar() {
 
         {/* Right side: Cart, Theme Switcher, Profile */}
         <div className="hidden lg:flex items-end justify-end space-x-2 ">
-          <Badge content={totalUniqueProducts} color="secondary">
-            <CartModal />
-          </Badge>
+          <CartModal />
+
           <ThemeSwitcher />
 
           {!isLoading && (
