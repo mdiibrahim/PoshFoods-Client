@@ -22,6 +22,16 @@ const initialState: AuthState = {
   isAuthenticated: !!Cookies.get("token"), // Check if token exists in cookies
 };
 
+// Helper function to check token expiry
+export const isTokenExpired = (token: string): boolean => {
+  try {
+    const decoded: DecodedToken = jwtDecode<DecodedToken>(token);
+    return decoded.exp * 1000 < Date.now(); // Token expired if exp is less than the current time
+  } catch (error) {
+    return true; // If decoding fails, consider token expired
+  }
+};
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -51,7 +61,7 @@ const authSlice = createSlice({
     },
     loadUserFromToken: (state) => {
       const token = Cookies.get("token");
-      if (token) {
+      if (token && !isTokenExpired(token)) {
         try {
           const decoded: DecodedToken = jwtDecode<DecodedToken>(token);
           state.token = token;
@@ -59,7 +69,11 @@ const authSlice = createSlice({
           state.isAuthenticated = true;
         } catch (error) {
           state.isAuthenticated = false;
+          Cookies.remove("token");
         }
+      } else {
+        state.isAuthenticated = false;
+        Cookies.remove("token"); // Remove the token if expired
       }
     },
   },

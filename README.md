@@ -1,6 +1,6 @@
 # PoshFoods - Client
 
-This is the Client Repo of [PoshTurf-Server](https://github.com/mdiibrahim/PoshFoods-server)
+This is the Client Repo of [PoshFoods-Server](https://github.com/mdiibrahim/PoshFoods-server)
 
 ## Introduction
 

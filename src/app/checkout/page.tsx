@@ -188,7 +188,7 @@ const CheckoutPage = () => {
         {/* Place Order Section */}
         <div className="w-full lg:w-1/2  shadow-lg rounded-lg p-6 flex flex-col justify-between">
           <div className="mb-6">
-            <p className="text-lg font-semibold">
+            <div className="text-lg font-semibold">
               Your order has been confirmed! Expect delivery within 3-7 days, In
               sha Allah.
               <br />
@@ -203,7 +203,7 @@ const CheckoutPage = () => {
               <br />
               <br />
               We strive to provide you with the best service possible.
-            </p>
+            </div>
 
             {/* Cash on Delivery Radio Button */}
             <div className="mt-4">

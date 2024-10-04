@@ -17,7 +17,7 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout } from "@/redux/features/authSlice";
+import { isTokenExpired, logout } from "@/redux/features/authSlice";
 import { FaSearch, FaBars } from "react-icons/fa";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -43,11 +43,16 @@ export default function MergedNavbar() {
   });
 
   useEffect(() => {
+    // Check if token exists and is not expired
+    if (token && isTokenExpired(token)) {
+      dispatch(logout()); // Log out if token is expired
+      router.push("/login"); // Redirect to login
+    }
     const fetchCategories = async () => {
       setCategories(CATEGORIES);
     };
     fetchCategories();
-  }, []);
+  }, [token, dispatch, router]);
 
   const handleLogout = () => {
     dispatch(logout());

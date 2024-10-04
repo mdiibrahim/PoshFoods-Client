@@ -62,10 +62,35 @@ const ProductDetails = () => {
     : "This is a detailed description of the product. Explore the fantastic features of this product and enjoy its high quality.";
 
   const handleAddToCart = () => {
+    if (quantity > product.quantity) {
+      toast.error("Quantity exceeds available stock.");
+      return;
+    }
     dispatch(addToCart({ product, quantity }));
+    toast.success("Added to cart successfully!");
+  };
+
+  const handleQuantityChange = (newQuantity: number) => {
+    if (newQuantity <= 0) {
+      setQuantity(1);
+    } else if (newQuantity > product.quantity) {
+      setQuantity(product.quantity);
+      toast.error(`Cannot exceed available stock (${product.quantity}).`);
+    } else {
+      setQuantity(newQuantity);
+    }
   };
 
   const handleBuyNow = () => {
+    if (quantity > product.quantity) {
+      toast.error("Quantity exceeds available stock.");
+      return;
+    }
+    if (!token) {
+      toast.error("Please log in to buy the product.");
+      router.push("/login");
+      return;
+    }
     // Store the product details in localStorage or any temporary state
     const orderDetails = {
       productId: product._id,
@@ -142,20 +167,20 @@ const ProductDetails = () => {
             {product.title}
           </h1>
           <p className="text-xl text-primary dark:text-yellow-400 mb-4">
-            ${product.price}
+            Price: ${product.price}
+          </p>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            In Stock: {product.quantity}
           </p>
           <p className="text-gray-600 dark:text-gray-300 mb-6">
             {product.description}
-          </p>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
-            {product.quantity}
           </p>
 
           {/* Quantity Selector */}
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center border rounded-lg">
               <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                onClick={() => handleQuantityChange(quantity - 1)}
                 className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-l-lg"
               >
                 -
@@ -163,11 +188,11 @@ const ProductDetails = () => {
               <input
                 type="text"
                 value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
+                onChange={(e) => handleQuantityChange(Number(e.target.value))}
                 className="w-12 text-center text-black dark:bg-gray-800 dark:text-white"
               />
               <button
-                onClick={() => setQuantity(quantity + 1)}
+                onClick={() => handleQuantityChange(quantity + 1)}
                 className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-r-lg"
               >
                 +
