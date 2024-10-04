@@ -8,7 +8,7 @@ import {
 } from "@/redux/api/reviewApi"; // Import the reviews query and mutation
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import { Button } from "@nextui-org/react";
+import { Button, Tooltip } from "@nextui-org/react";
 
 import { addToCart } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"; // Import authentication and redux hooks
@@ -21,7 +21,7 @@ import { useState } from "react";
 const ProductDetails = () => {
   const { productId } = useParams();
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.auth); // Get the user's authentication token
+  const { token, role } = useAppSelector((state) => state.auth); // Get the user's authentication token
   const router = useRouter(); // For navigation
 
   const [quantity, setQuantity] = useState(1);
@@ -131,7 +131,9 @@ const ProductDetails = () => {
       toast.error("Failed to submit review. Please try again.");
     }
   };
-
+  // Disable actions for admin users
+  const isAdmin = role === "admin";
+  const adminTooltip = "Admins are not allowed to perform this action.";
   return (
     // Enhance spacing, typography, and layout consistency
     <div className="container m-auto px-4 py-12">
@@ -170,7 +172,8 @@ const ProductDetails = () => {
             Price: ${product.price}
           </p>
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            In Stock: {product.quantity}
+            In Stock:{" "}
+            {product.quantity - quantity >= 0 ? product.quantity - quantity : 0}
           </p>
           <p className="text-gray-600 dark:text-gray-300 mb-6">
             {product.description}
@@ -179,31 +182,60 @@ const ProductDetails = () => {
           {/* Quantity Selector */}
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center border rounded-lg">
-              <button
-                onClick={() => handleQuantityChange(quantity - 1)}
-                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-l-lg"
-              >
-                -
-              </button>
+              <Tooltip content={adminTooltip} isDisabled={!isAdmin}>
+                <button
+                  onClick={() => handleQuantityChange(quantity - 1)}
+                  disabled={isAdmin} // Disable button for admin
+                  className={`px-4 py-2 ${
+                    isAdmin
+                      ? "bg-red-500 cursor-not-allowed"
+                      : "bg-gray-200 hover:bg-gray-300"
+                  } rounded-l-lg`}
+                >
+                  -
+                </button>
+              </Tooltip>
               <input
                 type="text"
                 value={quantity}
                 onChange={(e) => handleQuantityChange(Number(e.target.value))}
                 className="w-12 text-center text-black dark:bg-gray-800 dark:text-white"
               />
-              <button
-                onClick={() => handleQuantityChange(quantity + 1)}
-                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-r-lg"
-              >
-                +
-              </button>
+              <Tooltip content={adminTooltip} isDisabled={!isAdmin}>
+                <button
+                  onClick={() => handleQuantityChange(quantity + 1)}
+                  disabled={isAdmin} // Disable button for admin
+                  className={`px-4 py-2 ${
+                    isAdmin
+                      ? "bg-red-500 cursor-not-allowed"
+                      : "bg-gray-200 hover:bg-gray-300"
+                  } rounded-r-lg`}
+                >
+                  +
+                </button>
+              </Tooltip>
             </div>
-            <Button onClick={handleAddToCart} className="bg-primary text-white">
-              Add to Cart
-            </Button>
-            <Button onClick={handleBuyNow} className="bg-secondary text-white">
-              Buy Now
-            </Button>
+            <Tooltip content={adminTooltip} isDisabled={!isAdmin}>
+              <Button
+                onClick={handleAddToCart}
+                className={`${
+                  isAdmin ? "bg-red-500 cursor-not-allowed" : "bg-primary"
+                } text-white`}
+                disabled={isAdmin}
+              >
+                Add to Cart
+              </Button>
+            </Tooltip>
+            <Tooltip content={adminTooltip} isDisabled={!isAdmin}>
+              <Button
+                onClick={handleBuyNow}
+                className={`${
+                  isAdmin ? "bg-red-500 cursor-not-allowed" : "bg-primary"
+                } text-white`}
+              >
+                Buy Now
+              </Button>
+            </Tooltip>
           </div>
 
           {/* Features */}
@@ -298,6 +330,7 @@ const ProductDetails = () => {
           <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
             Add a Review
           </h3>
+
           <textarea
             value={reviewComment}
             onChange={(e) => setReviewComment(e.target.value)}
@@ -316,12 +349,17 @@ const ProductDetails = () => {
               />
             ))}
           </div>
-          <Button
-            onClick={handleSubmitReview}
-            className="bg-blue-500 text-white"
-          >
-            Submit Review
-          </Button>
+          <Tooltip content={adminTooltip} isDisabled={!isAdmin}>
+            <Button
+              disabled={isAdmin}
+              onClick={handleSubmitReview}
+              className={`${
+                isAdmin ? "bg-red-500 cursor-not-allowed" : "bg-primary"
+              } text-white`}
+            >
+              Submit Review
+            </Button>
+          </Tooltip>
         </div>
       </div>
     </div>

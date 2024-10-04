@@ -21,15 +21,23 @@ const CartModal = () => {
   const totalPrice = useAppSelector((state) => state.cart.totalPrice);
   const tax = useAppSelector((state) => state.cart.tax);
   const grandTotal = useAppSelector((state) => state.cart.grandTotal);
+  const { role } = useAppSelector((state) => state.auth); // Get the user's role
   const router = useRouter();
+
+  // If the role is admin, set cartItems to empty and reset totals
+  const isAdmin = role === "admin";
+  const adjustedCartItems = isAdmin ? [] : cartItems;
+  const adjustedTotalPrice = isAdmin ? 0 : totalPrice;
+  const adjustedTax = isAdmin ? 0 : tax;
+  const adjustedGrandTotal = isAdmin ? 0 : grandTotal;
 
   const handleProceedToCheckout = () => {
     const orderSummary = {
-      cartItems,
-      totalPrice,
-      tax,
+      cartItems: adjustedCartItems,
+      totalPrice: adjustedTotalPrice,
+      tax: adjustedTax,
       deliveryFee: 15,
-      grandTotal,
+      grandTotal: adjustedGrandTotal,
     };
     localStorage.setItem("orderSummary", JSON.stringify(orderSummary));
     onOpenChange();
@@ -41,9 +49,10 @@ const CartModal = () => {
       <Button
         onPress={onOpen}
         className="flex items-center bg-primary text-white hover:bg-secondary"
+        disabled={isAdmin} // Disable button for admin
       >
         <FaShoppingCart size={15} />{" "}
-        <span className="ml-2">{cartItems.length}</span>
+        <span className="ml-2">{adjustedCartItems.length}</span>
       </Button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -54,15 +63,15 @@ const CartModal = () => {
                 Your Cart
               </ModalHeader>
               <ModalBody>
-                {cartItems && cartItems.length > 0 ? (
+                {adjustedCartItems && adjustedCartItems.length > 0 ? (
                   <div className="space-y-4">
-                    {cartItems.map((product: any) => (
+                    {adjustedCartItems.map((product: any) => (
                       <CartDetails key={product._id} product={product} />
                     ))}
                     <div className="mt-6 text-right">
-                      <p>Total Price: ${totalPrice.toFixed(2)}</p>
-                      <p>Tax: ${tax.toFixed(2)}</p>
-                      <p>Grand Total: ${grandTotal.toFixed(2)}</p>
+                      <p>Total Price: ${adjustedTotalPrice.toFixed(2)}</p>
+                      <p>Tax: ${adjustedTax.toFixed(2)}</p>
+                      <p>Grand Total: ${adjustedGrandTotal.toFixed(2)}</p>
                     </div>
                   </div>
                 ) : (
@@ -73,7 +82,7 @@ const CartModal = () => {
                 <div className="flex justify-between w-full">
                   <Button
                     onPress={handleProceedToCheckout}
-                    isDisabled={cartItems.length === 0}
+                    isDisabled={adjustedCartItems.length === 0 || isAdmin} // Disable for empty cart or admin
                     className="bg-primary text-white hover:bg-secondary"
                   >
                     Proceed to Checkout

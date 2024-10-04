@@ -29,6 +29,22 @@ const Login = () => {
     }
   };
 
+  // Function to auto-fill Admin credentials
+  const autoFillAdminCredentials = () => {
+    setFormData({
+      email: "admin@poshfoods.com",
+      password: "Ad1234",
+    });
+  };
+
+  // Function to auto-fill User credentials
+  const autoFillUserCredentials = () => {
+    setFormData({
+      email: "ibrahim@gmail.com",
+      password: "Ib1234",
+    });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -80,6 +96,39 @@ const Login = () => {
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        {/* Demo Credentials Section */}
+        <div className="mt-6 text-center">
+          <h3 className="text-lg font-semibold mb-2 text-gray-800">
+            Demo Credentials
+          </h3>
+
+          {/* Admin Credentials */}
+          <div className="space-y-2">
+            <p className="font-medium">Admin:</p>
+            <p>Email: admin@poshfoods.com</p>
+            <p>Password: Ad1234</p>
+            <button
+              onClick={autoFillAdminCredentials}
+              className="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-lg"
+            >
+              Auto-fill Admin Credentials
+            </button>
+          </div>
+
+          {/* User Credentials */}
+          <div className="mt-4 space-y-2">
+            <p className="font-medium">User:</p>
+            <p>Email: ibrahim@gmail.com</p>
+            <p>Password: Ib1234</p>
+            <button
+              onClick={autoFillUserCredentials}
+              className="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-lg"
+            >
+              Auto-fill User Credentials
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

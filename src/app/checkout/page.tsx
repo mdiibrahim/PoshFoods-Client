@@ -229,7 +229,7 @@ const CheckoutPage = () => {
             Place Order
           </Button>
           <Button
-            onPress={() => router.push("/cart")}
+            onPress={() => router.push("/product")}
             className="w-full bg-gray-100 text-gray-700 hover:bg-gray-200"
           >
             Continue Shopping
