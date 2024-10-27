@@ -44,18 +44,15 @@ export default function ReviewSection() {
   const reviews = data?.data.slice(0, 10);
 
   return (
-    <section className="p-4">
-      <h2 className="text-3xl font-bold text-center mb-10">Customer Reviews</h2>
+    <section className="p-4 my-16 dark:bg-darkBackground">
+      <h2 className="text-3xl font-bold text-center mb-10 text-primary dark:text-darkText">
+        Customer Reviews
+      </h2>
       {reviews && reviews.length > 0 ? (
         <Slider {...sliderSettings}>
           {reviews.map((review: any, index: number) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-2"
-            >
-              <Card className="hover:scale-105 transition-transform duration-300 ease-in-out">
+            <motion.div key={index} className="p-2">
+              <Card className="flex flex-col justify-between h-[250px] dark:bg-darkBackground">
                 <CardHeader className="flex items-center">
                   <Image
                     alt={`${review.name}'s profile picture`}
@@ -69,10 +66,12 @@ export default function ReviewSection() {
                     <p>{"⭐".repeat(review.rating)}</p>
                   </div>
                 </CardHeader>
-                <CardBody className="p-4 dark:text-white">
-                  <p>{review.comment}</p>
+
+                <CardBody className="p-4 flex-grow dark:text-white text-center">
+                  <p className="line-clamp-2">{review.comment}</p>
                 </CardBody>
-                <CardFooter className="bg-primary p-4">
+
+                <CardFooter className="bg-primary p-4 text-center mt-auto">
                   <p>{review.user.name}</p>
                 </CardFooter>
               </Card>

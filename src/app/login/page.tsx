@@ -46,16 +46,16 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-darkBackground dark:text-darkText">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md dark:bg-darkBackground dark:text-darkText border border-gray-300">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-darkText">
           Login
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 ">
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-600"
+              className="block text-sm font-medium text-gray-600 dark:text-darkText"
             >
               Email Address
             </label>
@@ -72,7 +72,7 @@ const Login = () => {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-600"
+              className="block text-sm font-medium text-gray-600 dark:text-darkText"
             >
               Password
             </label>
@@ -99,7 +99,7 @@ const Login = () => {
 
         {/* Demo Credentials Section */}
         <div className="mt-6 text-center">
-          <h3 className="text-lg font-semibold mb-2 text-gray-800">
+          <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-darkText">
             Demo Credentials
           </h3>
 

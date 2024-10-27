@@ -16,7 +16,7 @@ export default function PopularProducts() {
 
   return (
     <motion.section
-      className="my-24 dark:bg-darkBackground"
+      className="my-16 dark:bg-darkBackground"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -34,7 +34,7 @@ export default function PopularProducts() {
       </div>
       {data?.data && data?.data?.length > 0 ? (
         <motion.div
-          className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
+          className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 dark:bg-darkBackground"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
@@ -52,7 +52,7 @@ export default function PopularProducts() {
               <Card
                 shadow="sm"
                 isPressable
-                className="hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="hover:scale-105 transition-transform duration-300 ease-in-out w-60"
                 onPress={() => router.push(`/product/${item._id}`)}
               >
                 <CardBody className="p-0">
@@ -61,7 +61,7 @@ export default function PopularProducts() {
                     radius="lg"
                     width="100%"
                     alt={item.title}
-                    className="object-cover w-full h-[250px]"
+                    className="object-cover rounded-none w-screen h-[200px]"
                     src={item.image}
                   />
                 </CardBody>

@@ -16,7 +16,7 @@ const CartDetails = ({ product }: any) => {
   };
 
   return (
-    <div className="flex items-center justify-between space-x-4 border border-gray-300 rounded-lg p-4 bg-white shadow-md transition-transform transform hover:scale-105 hover:shadow-lg w-full mx-auto">
+    <div className="dark:bg-darkBackground dark:text-darkText flex items-center justify-between space-x-4 border border-gray-300 rounded-lg p-4 bg-white shadow-md transition-transform transform hover:scale-105 hover:shadow-lg w-full mx-auto">
       <Image
         src={product.image}
         alt={product.name}

@@ -32,9 +32,9 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-darkBackground dark:text-darkText">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg dark:bg-darkBackground dark:text-darkText border border-gray-300">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-darkText">
           Sign Up
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -42,7 +42,7 @@ const SignUp = () => {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-gray-600 dark:text-darkText"
               >
                 Full Name
               </label>
@@ -59,7 +59,7 @@ const SignUp = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-gray-600 dark:text-darkText"
               >
                 Email
               </label>
@@ -76,7 +76,7 @@ const SignUp = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-gray-600 dark:text-darkText"
               >
                 Password
               </label>
@@ -93,7 +93,7 @@ const SignUp = () => {
             <div>
               <label
                 htmlFor="phone"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-gray-600 dark:text-darkText"
               >
                 Phone
               </label>
@@ -110,7 +110,7 @@ const SignUp = () => {
             <div>
               <label
                 htmlFor="address"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-gray-600 dark:text-darkText"
               >
                 Address
               </label>

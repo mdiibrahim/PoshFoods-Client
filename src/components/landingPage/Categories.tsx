@@ -18,12 +18,12 @@ const categoryImages: Record<string, StaticImageData> = {
 
 const Categories = () => {
   return (
-    <section className="py-16 dark:bg-darkBackground">
+    <section className="py-6 my-16 dark:bg-darkBackground">
       <h2 className="text-3xl font-bold text-center mb-10 text-primary dark:text-darkText">
         Food Categories
       </h2>
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
@@ -35,14 +35,14 @@ const Categories = () => {
             className="group"
           >
             <motion.div
-              className="dark:bg-[#1B263B] p-6 text-center shadow-lg rounded-lg group-hover:scale-105 transition-transform transform cursor-pointer hover:shadow-xl"
+              className="dark:bg-[#1B263B] p-4 bg-primary text-center shadow-lg rounded-lg group-hover:scale-105 transition-transform transform cursor-pointer hover:shadow-xl"
               whileHover={{ scale: 1.05 }}
             >
               <div className="h-40 mb-4">
                 <Image
-                  src={categoryImages[category]} // Use mapped images
+                  src={categoryImages[category]}
                   alt={category}
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-full object-cover rounded-none"
                 />
               </div>
               <h3 className="text-xl font-semibold text-textColor dark:text-darkText">

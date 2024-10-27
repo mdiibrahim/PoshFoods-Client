@@ -15,7 +15,13 @@ const Footer = () => {
     >
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 lg:px-4 p-10">
         <div className="flex flex-col items-center md:items-start">
-          <Image src={logo} alt="PoshFoods Logo" width={150} height={150} />
+          <Image
+            src={logo}
+            alt="PoshFoods Logo"
+            width={80}
+            height={80}
+            className="rounded-3xl"
+          />
           <h3 className="text-xl font-semibold mb-4 mt-2">PoshFoods</h3>
           <p className="text-sm text-textColor dark:text-darkText">
             Your one-stop shop for fresh groceries and delicious meals.

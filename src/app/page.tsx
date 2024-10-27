@@ -8,10 +8,13 @@ import Reviews from "@/components/landingPage/Reviews";
 export default function Home() {
   return (
     <div className="mx-auto">
-      <Banner />
+      <div className="h-[400px]">
+        <Banner />
+      </div>
+
       <FlashSale />
-      <Categories />
       <PopularProducts />
+      <Categories />
       <Reviews />
       <CustomerSupport />
     </div>

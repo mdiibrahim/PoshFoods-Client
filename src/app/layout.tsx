@@ -20,12 +20,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="scrollbar scrollbar-thumb-primary  scrollbar-track-gray-300 dark:scrollbar-thumb-secondary dark:scrollbar-track-gray-600"
+    >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body
-        className={`bg-light text-black  dark:bg-darkBackground ${merriweather.className} dark:text-white`}
+        className={`h-screen overflow-y-scroll bg-light text-black  dark:bg-darkBackground ${merriweather.className} dark:text-white`}
       >
         <UIProvider>
           <div className="">{children}</div>

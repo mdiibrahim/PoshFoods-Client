@@ -16,7 +16,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen dark:bg-darkBackground">
         {/* Ensure the header stretches across the entire width */}
         <header className="min-w-full">
           <Header />

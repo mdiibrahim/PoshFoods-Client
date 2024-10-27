@@ -65,7 +65,11 @@ const CartModal = () => {
         <span className="ml-2">{adjustedCartItems.length}</span>
       </Button>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        className="dark:text-darkText dark:bg-darkBackground"
+      >
         <ModalContent>
           {() => (
             <>

@@ -26,6 +26,7 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [nextui()],
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  plugins: [nextui(), require("tailwind-scrollbar")({ nocompatible: true })],
 };
 export default config;

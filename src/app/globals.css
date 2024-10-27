@@ -41,3 +41,23 @@ body {
 .animate-fadeIn {
   animation: fadeIn 1s ease-in-out;
 }
+
+.line-clamp-2 {
+  /* Fallback for older browsers: max-height based on line height */
+  max-height: 3.2em; /* 2 lines * 1.6 line-height */
+  overflow: hidden;
+
+  /* WebKit-based browsers (Chrome, Safari) */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  /* Standard syntax (future-proofing) */
+  display: box;
+  box-orient: vertical;
+  line-clamp: 2;
+
+  /* Ensuring ellipsis for overflowing text */
+  text-overflow: ellipsis;
+  white-space: normal;
+}

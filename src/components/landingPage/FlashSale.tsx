@@ -12,7 +12,7 @@ function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`${className} bg-primary p-4 rounded-full text-white cursor-pointer flex items-center justify-center`}
+      className={`${className} bg-primary hover:bg-secondary p-4 rounded-full text-white cursor-pointer flex items-center justify-center`}
       style={{
         ...style,
         display: "flex",
@@ -30,7 +30,7 @@ function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`${className} bg-primary p-4 rounded-full text-white cursor-pointer flex items-center justify-center`}
+      className={`${className} bg-primary hover:bg-secondary p-4 rounded-full text-white cursor-pointer flex items-center justify-center`}
       style={{
         ...style,
         display: "flex",
@@ -82,12 +82,12 @@ export default function FlashSale() {
 
   return (
     <motion.section
-      className="py-8  lg:px-8  dark:bg-[#1B263B]"
+      className="py-8 px-2  dark:bg-[#1B263B]"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="flex flex-col lg:flex-row lg:justify-between mb-6">
+      <div className="flex flex-col lg:flex-row lg:justify-between mb-6 w-full">
         <h2 className="text-2xl font-bold text-center mb-4 lg:mb-0 text-primary dark:text-white">
           Flash Sale Products
         </h2>
@@ -99,31 +99,31 @@ export default function FlashSale() {
         </Button>
       </div>
 
-      {itemsToShow && itemsToShow ? (
-        <Slider {...settings}>
+      {itemsToShow ? (
+        <Slider {...settings} className="">
           {itemsToShow.map((item: any, index: number) => (
             <motion.div
               key={index}
+              className="px-2 "
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <Card
                 shadow="sm"
                 isPressable
-                className="hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="w-64 hover:scale-105 transition-transform duration-300 ease-in-out rounded-lg gap-x-2"
                 onPress={() => router.push(`/product/${item._id}`)}
               >
                 <CardBody className="p-0">
                   <Image
-                    shadow="sm"
-                    radius="lg"
-                    width="100%"
+                    width="256px"
+                    height="180px"
                     alt={item.title}
-                    className="object-cover h-[140px]"
+                    className="object-cover  rounded-t-none rounded-b-none"
                     src={item.image}
                   />
                 </CardBody>
-                <CardFooter className="justify-between px-2 py-4  dark:bg-[#1B263B]">
+                <CardFooter className="justify-between px-2 py-4 dark:bg-[#1B263B]">
                   <span className="font-bold text-sm lg:text-base text-[#1B263B] dark:text-white">
                     {item.title}
                   </span>
