@@ -119,7 +119,11 @@ export default function MergedNavbar() {
         <NavbarContent className="hidden lg:flex items-center justify-center  space-x-2">
           <Dropdown>
             <DropdownTrigger>
-              <Button disableRipple className="p-0 bg-transparent" radius="sm">
+              <Button
+                disableRipple
+                className="p-0 bg-transparent text-lg"
+                radius="sm"
+              >
                 Categories
               </Button>
             </DropdownTrigger>
@@ -140,7 +144,9 @@ export default function MergedNavbar() {
           </Dropdown>
 
           <NavbarItem>
-            <Link href="/product">All Products</Link>
+            <Link href="/product" className="text-lg">
+              All Products
+            </Link>
           </NavbarItem>
 
           <form className="relative" onSubmit={handleSearch}>
@@ -236,7 +242,7 @@ export default function MergedNavbar() {
             <DropdownTrigger>
               <Button
                 disableRipple
-                className="p-0 text-lg bg-transparent"
+                className="p-0 text-lg bg-transparent "
                 radius="sm"
               >
                 Categories
@@ -259,7 +265,9 @@ export default function MergedNavbar() {
           </Dropdown>
 
           <NavbarItem>
-            <Link href="/product">All Products</Link>
+            <Link href="/product" className="text-lg">
+              All Products
+            </Link>
           </NavbarItem>
 
           <form className="relative w-full" onSubmit={handleSearch}>
@@ -268,9 +276,12 @@ export default function MergedNavbar() {
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-textColor dark:text-gray-300"
+              className="w-2/4 rounded-lg border border-gray-300 px-4 py-2 text-textColor dark:text-gray-300"
             />
-            <Button type="submit" className="absolute right-2 top-0 -mr-2">
+            <Button
+              type="submit"
+              className="absolute right-2 top-0 bottom-0 -mr-2"
+            >
               <FaSearch />
             </Button>
           </form>
@@ -304,11 +315,11 @@ export default function MergedNavbar() {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-row space-y-4 w-full mt-4">
+                <div className="flex flex-row space-x-4 w-full mt-4 justify-center">
                   <Button
                     as="a"
                     href="/login"
-                    className="bg-primary text-white hover:bg-secondary w-full"
+                    className="bg-primary text-white hover:bg-secondary w-full md:w-auto"
                     variant="flat"
                     size="sm"
                   >
@@ -317,7 +328,7 @@ export default function MergedNavbar() {
                   <Button
                     as="a"
                     href="/signup"
-                    className="bg-primary text-white hover:bg-secondary w-full"
+                    className="bg-primary text-white hover:bg-secondary w-full md:w-auto"
                     variant="flat"
                     size="sm"
                   >

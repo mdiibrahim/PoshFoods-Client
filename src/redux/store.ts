@@ -1,18 +1,33 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "@/redux/features/cartSlice";
 import authReducer from "@/redux/features/authSlice";
-import storage from "redux-persist/lib/storage";
-import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // Default to localStorage for web
+import {
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
 import { baseApi } from "./api/baseApi";
 
-const persistConfig = {
-  key: "root",
+// Config for the cart slice
+const cartPersistConfig = {
+  key: "cart",
   storage,
 };
 
-const persistedCartReducer = persistReducer(persistConfig, cartReducer);
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+// Config for the auth slice
+const authPersistConfig = {
+  key: "auth",
+  storage,
+};
+
+const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
@@ -22,10 +37,13 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // Disable serializable checks to allow non-serializable data
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER], // Avoid serialization warnings for redux-persist actions
+      },
     }).concat(baseApi.middleware),
 });
 
 export const persistor = persistStore(store);
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
