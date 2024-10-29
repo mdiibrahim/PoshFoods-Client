@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body
-        className={`h-screen overflow-y-scroll bg-light text-black  dark:bg-darkBackground ${merriweather.className} dark:text-white`}
+        className={`h-screen overflow-y-scroll  text-black  dark:bg-darkBackground ${merriweather.className} dark:text-white`}
       >
         <UIProvider>
           <div className="">{children}</div>

@@ -106,7 +106,7 @@ const AddProductSection: React.FC = () => {
   };
 
   return (
-    <div className=" p-6 shadow-lg rounded-lg dark:text-darkText   text-gray-900">
+    <div className=" p-6  rounded-lg dark:text-darkText   text-gray-900">
       <h4 className="text-2xl font-bold mb-4 text-primary">Add New Product</h4>
 
       <div className="space-y-4 ">

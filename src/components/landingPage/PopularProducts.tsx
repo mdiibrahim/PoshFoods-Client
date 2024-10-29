@@ -15,8 +15,8 @@ export default function PopularProducts() {
   }
 
   return (
-    <motion.section
-      className="my-16 dark:bg-darkBackground"
+    <motion.div
+      className="my-16 dark:bg-darkBackground gap-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -34,7 +34,7 @@ export default function PopularProducts() {
       </div>
       {data?.data && data?.data?.length > 0 ? (
         <motion.div
-          className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 dark:bg-darkBackground"
+          className="gap-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 dark:bg-darkBackground"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
@@ -80,6 +80,6 @@ export default function PopularProducts() {
           </p>
         </div>
       )}
-    </motion.section>
+    </motion.div>
   );
 }

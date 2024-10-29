@@ -23,7 +23,7 @@ const Categories = () => {
         Food Categories
       </h2>
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
@@ -35,7 +35,7 @@ const Categories = () => {
             className="group"
           >
             <motion.div
-              className="dark:bg-[#1B263B] p-4 bg-primary text-center shadow-lg rounded-lg group-hover:scale-105 transition-transform transform cursor-pointer hover:shadow-xl"
+              className="border border-gray-300 dark:bg-darkBackground p-4 bg-primary text-center shadow-lg rounded-lg group-hover:scale-105 transition-transform transform cursor-pointer hover:shadow-xl"
               whileHover={{ scale: 1.05 }}
             >
               <div className="h-40 mb-4">

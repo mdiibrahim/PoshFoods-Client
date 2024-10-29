@@ -29,9 +29,9 @@ const ProfileSection: React.FC = () => {
   const userData = data?.data; // Access user data
 
   return (
-    <div>
+    <div className="">
       <h2 className="text-4xl font-bold text-primary mb-6">Profile</h2>
-      <div className="bg-white shadow dark:bg-darkBackground rounded-lg p-8">
+      <div className="  dark:bg-darkBackground rounded-lg p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <p className="text-lg">
             <strong>Name:</strong> {userData?.name || "N/A"}

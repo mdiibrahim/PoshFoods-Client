@@ -29,8 +29,8 @@ const WelcomeSection: React.FC = () => {
   const userName = userData?.name || userData?.email.split("@")[0] || "Guest";
 
   return (
-    <div className="relative min-h-[400px] flex items-center justify-center bg-gradient-to-r from-teal-500 to-blue-600 text-white p-4 sm:p-8 lg:p-12">
-      <div className="bg-black bg-opacity-50 p-6 sm:p-8 lg:p-10 rounded-md text-center shadow-lg">
+    <div className="dark:bg-darkBackground dark:text-darkText relative min-h-[400px] flex items-center justify-center light:bg-gradient-to-r from-teal-500 to-teal-600 text-white p-4 sm:p-8 lg:p-12">
+      <div className="text-black dark:bg-darkBackground dark:text-darkText bg-opacity-50 p-6 sm:p-8 lg:p-10 rounded-md text-center ">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 animate-pulse">
           Welcome {userRole} {userName}
         </h1>

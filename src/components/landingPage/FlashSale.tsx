@@ -82,18 +82,18 @@ export default function FlashSale() {
 
   return (
     <motion.section
-      className="py-8 px-2  dark:bg-[#1B263B]"
+      className="py-8 px-2  "
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="flex flex-col lg:flex-row lg:justify-between mb-6 w-full">
-        <h2 className="text-2xl font-bold text-center mb-4 lg:mb-0 text-primary dark:text-white">
+      <div className="flex justify-between mb-6">
+        <h2 className="text-2xl font-bold text-center text-primary dark:text-darkText">
           Flash Sale Products
         </h2>
         <Button
           onClick={() => router.push(`/product?isPopular=true`)}
-          className="bg-primary dark:bg-[#A8DADC] text-white hover:bg-secondary dark:hover:bg-[#F1FAEE] transition-all w-full lg:w-auto"
+          className="bg-primary text-darkText hover:bg-secondary transition-all"
         >
           See All
         </Button>

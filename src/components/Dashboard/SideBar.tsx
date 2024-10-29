@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { RiMenuSearchFill } from "react-icons/ri";
-
+import { Tooltip, Button } from "@nextui-org/react";
 interface SidebarProps {
   setActiveSection: React.Dispatch<React.SetStateAction<string>>;
   options: { label: string; section: string }[];
@@ -17,21 +17,25 @@ export default function Sidebar({ setActiveSection, options }: SidebarProps) {
   return (
     <>
       {/* Toggle Button for Mobile */}
-      <button
-        className="lg:hidden p-6 static   top-20 left-2/4 z-50 "
-        onClick={toggleSidebar}
-        aria-label="Toggle Sidebar"
-      >
-        <RiMenuSearchFill className="text-primary ml-80 text-4xl" />
-      </button>
+      <Tooltip color="primary" content="Open DashBoard Menu" placement="bottom">
+        <Button
+          className="lg:hidden static inset-x-0 mx-auto p-6 top-20 z-50 flex justify-center items-center"
+          onClick={toggleSidebar}
+          aria-label="Toggle Sidebar"
+        >
+          <RiMenuSearchFill className="text-primary text-4xl" />
+        </Button>
+      </Tooltip>
 
       {/* Sidebar */}
       <aside
         className={`${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 fixed lg:relative lg:w-64 bg-primary p-4 top-40 lg:top-0 z-40 dark:bg-darkBackground lg:z-auto left-0 w-2/4 text-white min-h-screen shadow-lg transform transition-transform duration-300 ease-in-out`}
+          isOpen
+            ? "translate-x-0 dark:bg-darkBackground dark:text-darkText "
+            : "-translate-x-full"
+        } lg:translate-x-0 fixed lg:relative lg:w-64 bg-primary p-6 top-40 lg:top-0 z-40 dark:border border-gray-100 dark:bg-darkBackground lg:z-auto left-0 w-2/4 text-white min-h-screen shadow-lg transform transition-transform duration-300 ease-in-out `}
       >
-        <h2 className="text-3xl font-extrabold mb-8">Dashboard</h2>
+        <h2 className="text-2xl md:text:3xl font-extrabold mb-8">Dashboard</h2>
         <nav>
           <ul className="space-y-4">
             {options.map((option) => (

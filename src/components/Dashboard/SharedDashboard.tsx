@@ -15,10 +15,10 @@ export default function SharedDashboard({ sections }: LayoutProps) {
   }));
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+    <div className="min-h-screen flex flex-col lg:flex-row dark:bg-darkBackground dark:text-darkText">
       <Sidebar setActiveSection={setActiveSection} options={makeSections} />
-      <main className="flex-1 p-6 lg:p-8 bg-gradient-to-r from-green-50 to-blue-100 w-full">
-        <div className="bg-white dark:bg-darkBackground shadow-md rounded-lg p-6">
+      <main className="flex-1 dark:border border-gray-100 w-full">
+        <div className=" p-10 dark:bg-darkBackground dark:text-darkText">
           {sections[activeSection]}
         </div>
       </main>
