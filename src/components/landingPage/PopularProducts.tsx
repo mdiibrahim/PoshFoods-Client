@@ -34,7 +34,7 @@ export default function PopularProducts() {
       </div>
       {data?.data && data?.data?.length > 0 ? (
         <motion.div
-          className="gap-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 dark:bg-darkBackground"
+          className="gap-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center mx-auto dark:bg-darkBackground"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{

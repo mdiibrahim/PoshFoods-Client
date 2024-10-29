@@ -12,10 +12,7 @@ import {
 export function SupportCard() {
   return (
     <motion.div className="w-3/4 lg:w-1/2 my-10" whileTap={{ scale: 0.95 }}>
-      <Card
-        shadow="lg"
-        className="hover:shadow-md transition-shadow dark:bg-darkBackground"
-      >
+      <Card className="shadow-md  dark:bg-darkBackground">
         <CardBody>
           <h3 className="text-center text-primary dark:text-darkText">
             Contact Our Customer Support

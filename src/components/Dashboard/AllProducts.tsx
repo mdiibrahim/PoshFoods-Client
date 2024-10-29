@@ -7,9 +7,9 @@ import {
 } from "@/redux/api/productApi";
 import { toast } from "react-toastify";
 import ProductModal from "./UpdateProductSection";
-import { Spinner, Pagination } from "@nextui-org/react"; // Optional for loading spinner and pagination
+import { Spinner, Pagination } from "@nextui-org/react";
 import Image from "next/image";
-import { CATEGORIES } from "@/constant/category"; // Import your categories
+import { CATEGORIES } from "@/constant/category";
 
 const ProductsSection: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +20,6 @@ const ProductsSection: React.FC = () => {
 
   const query: Record<string, any> = { page: currentPage, limit };
 
-  // Add filters
   if (category) query.category = category;
   if (priceMin) query.priceMin = priceMin;
   if (priceMax) query.priceMax = priceMax;
@@ -38,27 +37,28 @@ const ProductsSection: React.FC = () => {
     }
   };
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+  const handlePageChange = (page: number) => setCurrentPage(page);
 
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLimit(Number(e.target.value));
     setCurrentPage(1);
   };
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
         <Spinner label="Loading products..." />
       </div>
     );
-  if (error)
+  }
+
+  if (error) {
     return (
       <div className="text-red-500">
         <p>Error loading products. Please try again later.</p>
       </div>
     );
+  }
 
   return (
     <div className="p-4 dark:bg-darkBackground dark:text-darkText">
@@ -68,7 +68,6 @@ const ProductsSection: React.FC = () => {
 
       {/* Filters Section */}
       <div className="flex flex-wrap gap-4 mb-6">
-        {/* Category Filter */}
         <div>
           <label htmlFor="category" className="block text-sm font-medium">
             Category:
@@ -88,7 +87,6 @@ const ProductsSection: React.FC = () => {
           </select>
         </div>
 
-        {/* Price Min Filter */}
         <div>
           <label htmlFor="priceMin" className="block text-sm font-medium">
             Price Min:
@@ -102,7 +100,6 @@ const ProductsSection: React.FC = () => {
           />
         </div>
 
-        {/* Price Max Filter */}
         <div>
           <label htmlFor="priceMax" className="block text-sm font-medium">
             Price Max:
@@ -116,7 +113,6 @@ const ProductsSection: React.FC = () => {
           />
         </div>
 
-        {/* Limit Items */}
         <div>
           <label htmlFor="limit" className="block text-sm font-medium">
             Items per page:
@@ -136,46 +132,45 @@ const ProductsSection: React.FC = () => {
 
       {/* Product List */}
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.data &&
-          data?.data.map((product: any) => (
-            <li
-              key={product._id}
-              className="bg-backgroundColor p-6 shadow-lg rounded-lg"
-            >
-              <div className="flex flex-col justify-between h-full ">
-                <div className="mb-4">
-                  <h4 className="font-bold dark:text-black  text-lg mb-2">
-                    {product.title}
-                  </h4>
-                  <p className="text-gray-500 mb-2">{product.category}</p>
-                  <p className="text-gray-700 font-semibold mb-2">
-                    ${product.price}
-                  </p>
+        {data?.data.map((product: any) => (
+          <li
+            key={product._id}
+            className="bg-white dark:bg-darkSecondary p-4 shadow-md rounded-lg flex flex-col justify-between"
+          >
+            <div>
+              <h4 className="font-bold text-lg mb-2">{product.title}</h4>
+              <p className="text-sm text-gray-500 mb-2">{product.category}</p>
+              <p className="text-gray-700 font-semibold mb-2">
+                ${product.price}
+              </p>
+              <div className="relative w-full h-32 mb-4">
+                <div className="relative w-full h-32 mb-4">
                   <Image
                     src={product.image}
                     alt={product.title}
-                    width={50}
-                    height={50}
-                    className="object-cover mb-4 rounded-md"
+                    fill
+                    className="object-contain rounded-md"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
-                <div className="flex space-x-4">
-                  <button
-                    onClick={() => setSelectedProduct(product)}
-                    className="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteProduct(product._id)}
-                    className="flex-1 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
-                  >
-                    Delete
-                  </button>
-                </div>
               </div>
-            </li>
-          ))}
+            </div>
+            <div className="flex space-x-4 mt-auto">
+              <button
+                onClick={() => setSelectedProduct(product)}
+                className="flex-grow bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteProduct(product._id)}
+                className="flex-grow bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </li>
+        ))}
       </ul>
 
       {/* Pagination */}
